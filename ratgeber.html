@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#2E4374">
+    <meta name="format-detection" content="telephone=no">
+    <title>Tipps & Rechner - TarifWechsler</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script>
+        // Prüfen, ob das Gerät ein Mobilgerät ist
+        function isMobile() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+
+        // Desktop-Ansicht aktivieren/deaktivieren
+        function toggleDesktopView() {
+            const html = document.documentElement;
+            if (html.classList.contains('desktop-view')) {
+                html.classList.remove('desktop-view');
+                localStorage.setItem('desktopView', 'false');
+                document.getElementById('viewToggle').textContent = 'Desktop-Ansicht';
+            } else {
+                html.classList.add('desktop-view');
+                localStorage.setItem('desktopView', 'true');
+                document.getElementById('viewToggle').textContent = 'Mobile-Ansicht';
+            }
+        }
+
+        // Gespeicherte Einstellung beim Laden anwenden
+        document.addEventListener('DOMContentLoaded', function() {
+            if (isMobile()) {
+                // View-Toggle-Button nur auf Mobilgeräten anzeigen
+                const viewToggleBtn = document.createElement('button');
+                viewToggleBtn.id = 'viewToggle';
+                viewToggleBtn.className = 'view-toggle-btn';
+                viewToggleBtn.textContent = 'Desktop-Ansicht';
+                viewToggleBtn.addEventListener('click', toggleDesktopView);
+                document.body.appendChild(viewToggleBtn);
+                
+                // Gespeicherte Einstellung anwenden
+                const savedView = localStorage.getItem('desktopView');
+                if (savedView === 'true') {
+                    document.documentElement.classList.add('desktop-view');
+                    viewToggleBtn.textContent = 'Mobile-Ansicht';
+                }
+            }
+        });
+    </script>
+    <style>
+        /* Startseiten-spezifische Stile */
+        body {
+            background: linear-gradient(to bottom, #2E4374 0%, #243156 30%, #1A2C54 60%, #141d37 85%, #121824 100%);
+            background-attachment: fixed;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        
+        /* Entfernen aller Margins zwischen Sektionen */
+        section {
+            margin: 0 !important;
+            padding: 2.5rem 0; /* Reduziertes Padding für kompaktere Darstellung */
+            background: transparent !important;
+            background-image: none !important;
+            position: relative;
+            border: none !important;
+        }
+        
+        section::before, section::after {
+            display: none !important;
+        }
+        
+        /* Grundlegende Stile für die Headerleiste mit grauem, durchsichtigem Hintergrund */
+        header {
+            background-color: rgba(80, 80, 80, 0.5); /* Grauer transparenter Hintergrund */
+            backdrop-filter: blur(5px); /* Glaseffekt */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Verstärkter Schatten */
+            z-index: 1000;
+        }
+        
+        /* 3D-Effekt und Schatten für das TarifWechsler-Logo */
+        header .logo h1 {
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5), 
+                         0 4px 8px rgba(0, 0, 0, 0.3),
+                         0 0 5px rgba(255, 255, 255, 0.4);
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            transform: perspective(500px) rotateX(5deg);
+            display: inline-block;
+            transition: all 0.3s ease;
+            color: #66a5ff; /* Helles Blau für "Tarif" */
+        }
+        
+        header .logo h1:hover {
+            transform: perspective(500px) rotateX(0deg) scale(1.05);
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.6), 
+                         0 6px 12px rgba(0, 0, 0, 0.4),
+                         0 0 8px rgba(255, 255, 255, 0.5);
+        }
+        
+        header .logo span {
+            color: #ffffff; /* "Wechsler" in Weiß */
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Schatten für Lesbarkeit beibehalten */
+            -webkit-background-clip: unset; 
+            -webkit-text-fill-color: unset;
+            background: none;
+        }
+        
+        /* Komplett entfernen aller Elemente, die Trennlinien verursachen könnten */
+        .hero-wave, .wave-divider, .cta-wave-top, .cta-wave-bottom, .process-line {
+            display: none !important;
+        }
+        
+        /* Entfernen aller Hintergründe bei Sektionen */
+        .hero, .features, .how-it-works, .testimonials, section {
+            background: transparent !important;
+            background-image: none !important;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .subpage-hero::after, .subpage-hero::before, .subpage-hero .container::before {
+            display: none !important;
+        }
+        
+        .footer-bottom {
+            background-color: rgba(0,0,0,0.3);
+            margin-top: 0;
+            border-top: none;
+        }
+        
+        .footer-top {
+            background-color: rgba(0,0,0,0.1);
+            margin-bottom: 0;
+            border-bottom: none;
+        }
+        
+        /* Container für Hintergrund-Vierecke */
+        .background-squares {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        /* Einzelne Hintergrund-Vierecke */
+        .square {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.05);
+            animation: float-squares 15s infinite ease-in-out;
+        }
+        
+        @keyframes float-squares {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(10px, 15px) rotate(5deg); }
+            100% { transform: translate(0, 0) rotate(0deg); }
+        }
+        
+        .square:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 5%;
+            left: 10%;
+            background-color: rgba(148, 163, 184, 0.05);
+            animation-delay: 0s;
+        }
+        
+        .square:nth-child(2) {
+            width: 60px;
+            height: 60px;
+            top: 25%;
+            right: 5%;
+            background-color: rgba(148, 163, 184, 0.03);
+            animation-delay: 2s;
+        }
+        
+        .square:nth-child(3) {
+            width: 50px;
+            height: 50px;
+            bottom: 10%;
+            left: 20%;
+            background-color: rgba(148, 163, 184, 0.04);
+            animation-delay: 4s;
+        }
+        
+        .square:nth-child(4) {
+            width: 40px;
+            height: 40px;
+            top: 40%;
+            left: 30%;
+            background-color: rgba(148, 163, 184, 0.06);
+            animation-delay: 6s;
+        }
+        
+        .square:nth-child(5) {
+            width: 55px;
+            height: 55px;
+            bottom: 30%;
+            right: 15%;
+            background-color: rgba(148, 163, 184, 0.02);
+            animation-delay: 8s;
+        }
+        
+        .square:nth-child(6) {
+            width: 70px;
+            height: 70px;
+            top: 60%;
+            right: 25%;
+            background-color: rgba(148, 163, 184, 0.03);
+            animation-delay: 10s;
+        }
+        
+        .square:nth-child(7) {
+            width: 65px;
+            height: 65px;
+            top: 75%;
+            left: 5%;
+            background-color: rgba(148, 163, 184, 0.04);
+            animation-delay: 12s;
+        }
+        
+        .square:nth-child(8) {
+            width: 45px;
+            height: 45px;
+            top: 15%;
+            left: 50%;
+            background-color: rgba(148, 163, 184, 0.05);
+            animation-delay: 14s;
+        }
+        
+        /* Anpassungen für kompakteres Layout */
+        .subpage-hero {
+            padding-top: 0.5rem !important; /* Stark reduzierter Abstand nach oben */
+            padding-bottom: 1.5rem !important;
+        }
+        
+        /* Kompaktere Abstände bei Inhalten */
+        .guide-tabs {
+            padding-top: 2rem !important;
+        }
+        
+        .tabs-content {
+            margin-top: 1.5rem;
+        }
+        
+        .tab-panel {
+            padding: 1.5rem !important;
+        }
+        
+        .reasons-grid, .compare-steps, .tips-grid {
+            gap: 1rem !important;
+            margin-top: 1.5rem !important;
+        }
+        
+        .calculator-section {
+            padding-top: 2rem !important;
+            padding-bottom: 2rem !important;
+        }
+        
+        .section-header {
+            margin-bottom: 1.5rem !important;
+        }
+        
+        /* Kompaktere Abstände zwischen Elementen */
+        p {
+            margin-bottom: 0.8rem !important;
+        }
+        
+        h2, h3, h4 {
+            margin-bottom: 0.8rem !important;
+        }
+        
+        /* Zusätzlicher Stil für die Hauptüberschrift */
+        .hero-text.centered h2 {
+            margin-top: 1rem; /* Reduzierter Abstand nach oben */
+        }
+        
+        /* Anpassung für die CTA-Sektion */
+        .cta-content-wrapper {
+            background-color: rgba(80, 80, 80, 0.4);
+            backdrop-filter: blur(5px);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* Stil für die normale Überschrift */
+        .cta-text h2 {
+            color: white;
+            margin-bottom: 1.5rem;
+            font-size: 2.2rem;
+            font-weight: 700;
+        }
+        
+        /* Tabs-Container mit transparentem Hintergrund */
+        .tabs-container {
+            background-color: rgba(80, 80, 80, 0.4);
+            backdrop-filter: blur(5px);
+            border-radius: var(--radius);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+        }
+        
+        /* Tabs-Navigation mit transparentem Grau */
+        .tabs-nav {
+            display: flex;
+            background-color: rgba(80, 80, 80, 0.5);
+            padding: 0.5rem;
+            border-radius: var(--radius) var(--radius) 0 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Der Inhalt der Tabs (panels) ist transparent */
+        .tabs-content {
+            padding: 2rem;
+            background: transparent;
+        }
+        
+        /* Die "Wussten Sie schon?"-Box mit transparentem Grau */
+        .info-callout {
+            background-color: rgba(80, 80, 80, 0.4);
+            backdrop-filter: blur(5px);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            position: relative;
+        }
+        
+        /* Die normalen Info-Boxen mit den Symbolen jetzt etwas dunkleres Grau transparent */
+        .reason-card, .tip-card, .eco-label, .compare-step .compare-content, .eco-content {
+            background-color: rgba(230, 230, 230, 0.85);
+            backdrop-filter: blur(2px);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: all 0.3s ease;
+        }
+        
+        .reason-card:hover, .tip-card:hover, .eco-label:hover, .compare-step .compare-content:hover {
+            background-color: rgba(240, 240, 240, 0.9);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Verbesserte Lesbarkeit für Text auf transparentem Hintergrund */
+        .reason-card h3, .tip-card h3, .compare-step .compare-content h3 {
+            color: #1A2C54;
+            font-weight: 600;
+        }
+        
+        .reason-card p, .tip-card p, .compare-step .compare-content p {
+            color: #333;
+        }
+        
+        /* Verbesserte Symboldarstellung */
+        .reason-icon, .tab-icon {
+            background: linear-gradient(135deg, #2E4374 0%, #1A2C54 100%);
+            color: white;
+            box-shadow: 0 5px 15px rgba(26, 44, 84, 0.3);
+        }
+        
+        /* Tab-Überschrift deutlicher sichtbar machen */
+        .tab-header h2 {
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Neue Stile für den transparenten Rechner-Bereich */
+        .calculator-container {
+            background: transparent;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: none;
+            display: grid;
+            grid-template-columns: 3fr 2fr;
+            gap: 1rem;
+        }
+        
+        .calculator-form {
+            background-color: rgba(80, 80, 80, 0.4);
+            backdrop-filter: blur(5px);
+            padding: 2rem;
+            border-right: none;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            color: white;
+        }
+        
+        .calculator-form label {
+            color: white;
+            font-weight: 500;
+        }
+        
+        .calculator-form input, 
+        .calculator-form select {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+        
+        .calculator-form input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        /* Button zum Berechnen des Einsparpotenzials */
+        #calculate-btn, .btn-secondary {
+            background-color: #1A2C54;
+            color: white;
+            border: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        #calculate-btn:hover, .btn-secondary:hover {
+            background-color: #243670;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+        }
+        
+        /* Der Button "JETZT KOSTENLOS BERATEN LASSEN" */
+        .calculator-result .btn-secondary {
+            margin-top: 1rem;
+        }
+        
+        /* Neuer Stil für das Sparen-Bild mit dunklerem Hintergrund */
+        .cta-image img.contact-cubes {
+            filter: brightness(0.75) saturate(0.85); /* Macht das Bild deutlich dunkler */
+            transition: filter 0.3s ease;
+        }
+        
+        .cta-image img.contact-cubes:hover {
+            filter: brightness(0.85) saturate(0.9); /* Beim Hover etwas heller */
+        }
+        
+        /* Neuer Stil für den dunkelblauen Button mit weißer Schrift */
+        .btn-dark-blue {
+            background-color: #1A2C54;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-dark-blue:hover {
+            background-color: #243670;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+        }
+
+        nav ul {
+            display: flex;
+            gap: 20px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 8px 15px;
+            border-radius: 8px;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            background: rgba(255, 255, 255, 0.05);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            border-bottom: none; /* Explizit keinen unteren Rand setzen */
+        }
+
+        nav ul li a:hover, nav ul li a.active {
+            color: #ffffff;
+            background: rgba(66, 133, 244, 0.7);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+            transform: translateY(-3px) rotateX(5deg);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            border-bottom: none; /* Explizit keinen unteren Rand setzen */
+        }
+
+        /* ::after Pseudoelement entfernen, um den Unterstrich zu vermeiden */
+        nav ul li a::after, 
+        nav ul li a:hover::after,
+        nav ul li a.active::after {
+            display: none !important;
+            content: none !important;
+        }
+
+        @keyframes navPulse {
+            0% { box-shadow: 0 0 0 0 rgba(66, 133, 244, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(66, 133, 244, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(66, 133, 244, 0); }
+        }
+
+        nav ul li a.active {
+            animation: navPulse 2s infinite;
+        }
+
+        /* Stil für Desktop/Mobile-Ansicht Umschalter */
+        .view-toggle-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: rgba(46, 67, 116, 0.9);
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            padding: 10px 15px;
+            font-size: 14px;
+            font-weight: 600;
+            z-index: 9999;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .view-toggle-btn:hover {
+            background-color: rgba(26, 44, 84, 0.95);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+        }
+        
+        /* Verstecken des Umschalters beim Drucken */
+        @media print {
+            .view-toggle-btn {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hintergrund-Vierecke -->
+    <div class="background-squares">
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+    </div>
+    
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>Tarif<span>Wechsler</span></h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Startseite</a></li>
+                    <li><a href="ratgeber.html" class="active">Tipps & Rechner</a></li>
+                    <li><a href="kontakt.html">Kontakt</a></li>
+                    <li><a href="ueber-uns.html">Über uns</a></li>
+                    <li><a href="faq.html">FAQs</a></li>
+                </ul>
+            </nav>
+            <div class="mobile-menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <section class="subpage-hero">
+        <div class="hero-content">
+            <div class="container">
+                <div class="hero-text centered">
+                    <h2>Energiewissen für clevere Verbraucher</h2>
+                    <p>Tipps und Ratschläge für optimale Energietarife und Einsparungen</p>
+                </div>
+            </div>
+        </div>
+        <div class="hero-wave">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+                <path fill="#ffffff" fill-opacity="1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,149.3C960,160,1056,160,1152,138.7C1248,117,1344,75,1392,53.3L1440,32L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+            </svg>
+        </div>
+    </section>
+
+    <section class="guide-tabs">
+        <div class="container">
+            <div class="tabs-container">
+                <div class="tabs-nav">
+                    <button class="tab-btn active" data-target="tab-1">Stromanbieter­wechsel</button>
+                    <button class="tab-btn" data-target="tab-2">Tarifvergleich</button>
+                    <button class="tab-btn" data-target="tab-3">Ökostrom</button>
+                    <button class="tab-btn" data-target="tab-4">Spartipps</button>
+                </div>
+                
+                <div class="tabs-content">
+                    <div class="tab-panel active" id="tab-1">
+                        <div class="tab-header">
+                            <div class="tab-icon">
+                                <i class="fas fa-exchange-alt"></i>
+                            </div>
+                            <h2>Warum regelmäßig den Stromanbieter wechseln?</h2>
+                        </div>
+                        
+                        <div class="reasons-grid">
+                            <div class="reason-card">
+                                <div class="reason-icon">
+                                    <i class="fas fa-gift"></i>
+                                </div>
+                                <h3>Neukundenboni nutzen</h3>
+                                <p>Profitieren Sie von Willkommensprämien und Rabatten nur für Neukunden.</p>
+                            </div>
+                            
+                            <div class="reason-card">
+                                <div class="reason-icon">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <h3>Preiserhöhungen vermeiden</h3>
+                                <p>Nach der Mindestvertragslaufzeit erhöhen viele Anbieter ihre Preise deutlich.</p>
+                            </div>
+                            
+                            <div class="reason-card">
+                                <div class="reason-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <h3>Flexiblere Tarifmodelle</h3>
+                                <p>Wählen Sie moderne Tarife mit kurzen Laufzeiten oder monatlicher Kündigung.</p>
+                            </div>
+                            
+                            <div class="reason-card">
+                                <div class="reason-icon">
+                                    <i class="fas fa-sliders-h"></i>
+                                </div>
+                                <h3>Angepasst an Ihren Verbrauch</h3>
+                                <p>Stimmen Sie Ihren Tarif optimal auf Ihr aktuelles Verbrauchsverhalten ab.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="info-callout">
+                            <div class="callout-icon">
+                                <i class="fas fa-lightbulb"></i>
+                            </div>
+                            <div class="callout-content">
+                                <h3>Wussten Sie schon?</h3>
+                                <p>Ein regelmäßiger Anbieterwechsel alle 12-24 Monate kann Ihnen jährlich mehrere hundert Euro Ersparnis bringen!</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-panel" id="tab-2">
+                        <div class="tab-header">
+                            <div class="tab-icon">
+                                <i class="fas fa-search-dollar"></i>
+                            </div>
+                            <h2>Richtig Energietarife vergleichen</h2>
+                        </div>
+                        
+                        <div class="compare-steps">
+                            <div class="compare-step">
+                                <div class="step-marker">1</div>
+                                <div class="compare-content">
+                                    <h3>Verbrauch ermitteln</h3>
+                                    <p>Schauen Sie in Ihrer letzten Jahresabrechnung nach Ihrem tatsächlichen Stromverbrauch in kWh. Eine vierköpfige Familie verbraucht im Durchschnitt etwa 4.000 kWh pro Jahr.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="compare-step">
+                                <div class="step-marker">2</div>
+                                <div class="compare-content">
+                                    <h3>Grundpreis und Arbeitspreis prüfen</h3>
+                                    <p>Achten Sie auf beide Preiskomponenten: Der Grundpreis ist fix, der Arbeitspreis variiert je nach Verbrauch. Beide zusammen bestimmen Ihre tatsächlichen Kosten.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="compare-step">
+                                <div class="step-marker">3</div>
+                                <div class="compare-content">
+                                    <h3>Vertragsbedingungen vergleichen</h3>
+                                    <p>Prüfen Sie Laufzeit, Kündigungsfrist und Preisgarantien. Vorsicht bei automatischen Verlängerungen mit deutlich schlechteren Konditionen!</p>
+                                </div>
+                            </div>
+                            
+                            <div class="compare-step">
+                                <div class="step-marker">4</div>
+                                <div class="compare-content">
+                                    <h3>Boni richtig einrechnen</h3>
+                                    <p>Berücksichtigen Sie Boni nur dann, wenn Sie sicher sind, die Bedingungen zu erfüllen. Berechnen Sie immer die Gesamtkosten über die Vertragslaufzeit.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-panel" id="tab-3">
+                        <div class="tab-header">
+                            <div class="tab-icon">
+                                <i class="fas fa-leaf"></i>
+                            </div>
+                            <h2>Ökostrom: Nachhaltig und oft günstiger</h2>
+                        </div>
+                        
+                        <div class="eco-info">
+                            <div class="eco-image">
+                                <img src="images/oekostrom.jpeg" alt="Ökostrom">
+                            </div>
+                            <div class="eco-content">
+                                <h3>Was ist echter Ökostrom?</h3>
+                                <p>Echter Ökostrom stammt zu 100% aus erneuerbaren Energiequellen wie Wind, Sonne oder Wasserkraft. Wichtig ist, dass der Anbieter auch in den Ausbau erneuerbarer Energien investiert.</p>
+                                
+                                <h3>Auf diese Siegel können Sie vertrauen:</h3>
+                                <div class="eco-labels">
+                                    <div class="eco-label" style="background-color: #444444; color: white;">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Grüner Strom Label</span>
+                                    </div>
+                                    <div class="eco-label" style="background-color: #444444; color: white;">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>ok-power</span>
+                                    </div>
+                                    <div class="eco-label" style="background-color: #444444; color: white;">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>TÜV-Zertifizierung</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="eco-myth" style="border: 2px solid #FF6B00; border-radius: 10px; padding: 15px; margin-top: 15px;">
+                                    <h3 style="color: #FF6B00;">Mythos: "Ökostrom ist immer teurer"</h3>
+                                    <p style="color: #FF6B00;">Falsch! Viele Ökostromtarife sind mittlerweile genauso günstig oder sogar günstiger als konventionelle Angebote. Mit unserer Beratung finden Sie garantiert einen passenden Ökostromtarif zu einem attraktiven Preis.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-panel" id="tab-4">
+                        <div class="tab-header">
+                            <div class="tab-icon">
+                                <i class="fas fa-piggy-bank"></i>
+                            </div>
+                            <h2>Praktische Spartipps für Energiekosten</h2>
+                        </div>
+                        
+                        <div class="tips-grid">
+                            <div class="tip-card">
+                                <div class="tip-number">01</div>
+                                <h3>Regelmäßiger Anbieterwechsel</h3>
+                                <p>Wechseln Sie alle 1-2 Jahre Ihren Strom- und Gasanbieter, um von Neukundenrabatten und besseren Konditionen zu profitieren.</p>
+                                <div class="saving-potential">
+                                    <span>Sparpotenzial:</span>
+                                    <div class="saving-stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="tip-card">
+                                <div class="tip-number">02</div>
+                                <h3>Standby-Modus vermeiden</h3>
+                                <p>Geräte komplett ausschalten oder Steckerleisten mit Schalter verwenden, um den Standby-Verbrauch zu eliminieren.</p>
+                                <div class="saving-potential">
+                                    <span>Sparpotenzial:</span>
+                                    <div class="saving-stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="tip-card">
+                                <div class="tip-number">03</div>
+                                <h3>Energieeffiziente Geräte kaufen</h3>
+                                <p>Beim Neukauf auf die Energieeffizienzklasse achten – A+++ Geräte verbrauchen deutlich weniger Strom.</p>
+                                <div class="saving-potential">
+                                    <span>Sparpotenzial:</span>
+                                    <div class="saving-stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="tip-card">
+                                <div class="tip-number">04</div>
+                                <h3>Heizungsoptimierung</h3>
+                                <p>Regelmäßiges Entlüften, hydraulischer Abgleich und intelligente Thermostate senken die Heizkosten.</p>
+                                <div class="saving-potential">
+                                    <span>Sparpotenzial:</span>
+                                    <div class="saving-stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="calculator-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Sparpotenzial-Rechner</h2>
+                <p>Berechnen Sie Ihr persönliches Einsparpotenzial in wenigen Schritten</p>
+            </div>
+            
+            <div class="calculator-container">
+                <div class="calculator-form">
+                    <div class="form-group">
+                        <label for="consumption">Jährlicher Stromverbrauch (kWh)</label>
+                        <input type="number" id="consumption" value="3500">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="current-price">Aktueller Preis (Cent/kWh)</label>
+                        <input type="number" id="current-price" value="32">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="household-size">Haushaltsgröße</label>
+                        <select id="household-size">
+                            <option value="1">1 Person</option>
+                            <option value="2">2 Personen</option>
+                            <option value="3" selected>3-4 Personen</option>
+                            <option value="5">5+ Personen</option>
+                        </select>
+                    </div>
+                    
+                    <button id="calculate-btn" class="btn btn-primary">Einsparpotenzial berechnen</button>
+                </div>
+                
+                <div class="calculator-result">
+                    <div class="result-header">Ihr Einsparpotenzial</div>
+                    <div class="result-amount">247 €</div>
+                    <div class="result-period">pro Jahr</div>
+                    <div class="result-note">Basierend auf aktuellen Durchschnittspreisen und typischen Neukundenrabatten.</div>
+                    <a href="kontakt.html" class="btn btn-secondary">Jetzt kostenlos beraten lassen</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="cta-wave-top">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+                <path fill="#ffffff" fill-opacity="1" d="M0,256L48,261.3C96,267,192,277,288,272C384,267,480,245,576,224C672,203,768,181,864,181.3C960,181,1056,203,1152,229.3C1248,256,1344,288,1392,304L1440,320L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path>
+            </svg>
+        </div>
+        <div class="container">
+            <div class="cta-content">
+                <div class="cta-content-wrapper">
+                    <div class="cta-text">
+                        <h2>Bereit, jetzt zu sparen?</h2>
+                        <p>Unsere Experten helfen Ihnen, den optimalen Energietarif zu finden – persönlich, unabhängig und genau auf Ihre Bedürfnisse zugeschnitten.</p>
+                        <a href="kontakt.html" class="btn btn-dark-blue">Kostenlose Beratung vereinbaren</a>
+                    </div>
+                    <div class="cta-image">
+                        <img src="images/Sparen.jpeg" alt="Kontaktmöglichkeiten" class="contact-cubes">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="cta-wave-bottom">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+                <path fill="#ffffff" fill-opacity="1" d="M0,96L48,117.3C96,139,192,181,288,176C384,171,480,117,576,101.3C672,85,768,107,864,133.3C960,160,1056,192,1152,197.3C1248,203,1344,181,1392,170.7L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+            </svg>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-top">
+            <div class="container">
+                <div class="footer-grid">
+                    <div class="footer-info">
+                        <h3>TarifWechsler</h3>
+                        <p>Ihr Partner für transparente und individuelle Energieberatung. Wir helfen Ihnen, den optimalen Tarif für Ihre Bedürfnisse zu finden.</p>
+                        <div class="social-icons">
+                            <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                    <div class="footer-links">
+                        <h3>Schnellzugriff</h3>
+                        <ul>
+                            <li><a href="index.html">Startseite</a></li>
+                            <li><a href="ratgeber.html">Tipps & Rechner</a></li>
+                            <li><a href="kontakt.html">Kontakt</a></li>
+                            <li><a href="ueber-uns.html">Über uns</a></li>
+                            <li><a href="faq.html">FAQs</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-links">
+                        <h3>Service</h3>
+                        <ul>
+                            <li><a href="#">Stromtarifberatung</a></li>
+                            <li><a href="#">Gastarifberatung</a></li>
+                            <li><a href="#">Ökostrom-Angebote</a></li>
+                            <li><a href="#">FAQ</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-contact">
+                        <h3>Kontakt</h3>
+                        <p><i class="fas fa-envelope"></i> info@tarifwechsler.de</p>
+                        <p><i class="fas fa-phone"></i> +49 123 456 789</p>
+                        <p><i class="fas fa-map-marker-alt"></i> Energiestraße 1, 10115 Berlin</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <p>&copy; 2023 TarifWechsler. Alle Rechte vorbehalten.</p>
+                <div class="footer-legal">
+                    <a href="#">Impressum</a>
+                    <a href="#">Datenschutz</a>
+                    <a href="#">AGB</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        document.querySelector('.mobile-menu-toggle').addEventListener('click', function() {
+            document.querySelector('nav ul').classList.toggle('show');
+        });
+        
+        // Tabs Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            const tabPanels = document.querySelectorAll('.tab-panel');
+            
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Remove active class from all buttons and panels
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabPanels.forEach(panel => panel.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    button.classList.add('active');
+                    
+                    // Show the corresponding panel
+                    const target = button.getAttribute('data-target');
+                    document.getElementById(target).classList.add('active');
+                });
+            });
+        });
+        
+        // Calculator functionality
+        document.getElementById('calculate-btn').addEventListener('click', function() {
+            const consumption = parseInt(document.getElementById('consumption').value) || 3500;
+            const currentPrice = parseFloat(document.getElementById('current-price').value) || 32;
+            const householdSize = document.getElementById('household-size').value;
+            
+            // Simple calculation (in real implementation, this would be more sophisticated)
+            let savings = (consumption * currentPrice * 0.2) / 100; // Assume 20% savings potential
+            
+            // Adjust based on household size
+            switch(householdSize) {
+                case '1':
+                    savings = savings * 0.8;
+                    break;
+                case '2':
+                    savings = savings * 0.9;
+                    break;
+                case '5':
+                    savings = savings * 1.2;
+                    break;
+                default:
+                    // Keep as is for 3-4 person households
+            }
+            
+            // Add potential bonus
+            savings += 100; // Average bonus amount
+            
+            // Update result with animation
+            const resultElement = document.querySelector('.result-amount');
+            const currentValue = parseInt(resultElement.textContent);
+            const newValue = Math.round(savings);
+            
+            // Simple animation from current to new value
+            let displayValue = currentValue;
+            const interval = setInterval(() => {
+                const diff = newValue - displayValue;
+                const step = diff > 0 ? Math.ceil(diff / 10) : Math.floor(diff / 10);
+                
+                if (Math.abs(diff) < 10) {
+                    displayValue = newValue;
+                    clearInterval(interval);
+                } else {
+                    displayValue += step;
+                }
+                
+                resultElement.textContent = displayValue + ' €';
+            }, 50);
+        });
+    </script>
+</body>
+</html> 

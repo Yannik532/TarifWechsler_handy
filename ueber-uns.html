@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#2E4374">
+    <meta name="format-detection" content="telephone=no">
+    <title>Über uns | TarifWechsler</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script>
+        // Prüfen, ob das Gerät ein Mobilgerät ist
+        function isMobile() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+
+        // Desktop-Ansicht aktivieren/deaktivieren
+        function toggleDesktopView() {
+            const html = document.documentElement;
+            if (html.classList.contains('desktop-view')) {
+                html.classList.remove('desktop-view');
+                localStorage.setItem('desktopView', 'false');
+                document.getElementById('viewToggle').textContent = 'Desktop-Ansicht';
+            } else {
+                html.classList.add('desktop-view');
+                localStorage.setItem('desktopView', 'true');
+                document.getElementById('viewToggle').textContent = 'Mobile-Ansicht';
+            }
+        }
+
+        // Gespeicherte Einstellung beim Laden anwenden
+        document.addEventListener('DOMContentLoaded', function() {
+            if (isMobile()) {
+                // View-Toggle-Button nur auf Mobilgeräten anzeigen
+                const viewToggleBtn = document.createElement('button');
+                viewToggleBtn.id = 'viewToggle';
+                viewToggleBtn.className = 'view-toggle-btn';
+                viewToggleBtn.textContent = 'Desktop-Ansicht';
+                viewToggleBtn.addEventListener('click', toggleDesktopView);
+                document.body.appendChild(viewToggleBtn);
+                
+                // Gespeicherte Einstellung anwenden
+                const savedView = localStorage.getItem('desktopView');
+                if (savedView === 'true') {
+                    document.documentElement.classList.add('desktop-view');
+                    viewToggleBtn.textContent = 'Mobile-Ansicht';
+                }
+            }
+        });
+    </script>
+    <style>
+        /* Grundlegende Farbverlauf-Anpassung - wie auf Index und Ratgeber */
+        body {
+            background: linear-gradient(to bottom, #2E4374 0%, #243156 30%, #1A2C54 60%, #141d37 85%, #121824 100%);
+            background-attachment: fixed;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        
+        /* Entfernen aller Margins zwischen Sektionen */
+        section {
+            margin: 0 !important;
+            padding: 2.5rem 0; /* Reduziertes Padding für kompaktere Darstellung */
+            background: transparent !important;
+            background-image: none !important;
+            position: relative;
+            border: none !important;
+        }
+        
+        section::before, section::after {
+            display: none !important;
+        }
+        
+        /* Grundlegende Stile für die Headerleiste mit grauem, durchsichtigem Hintergrund */
+        header {
+            background-color: rgba(80, 80, 80, 0.5); /* Grauer transparenter Hintergrund */
+            backdrop-filter: blur(5px); /* Glaseffekt */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Verstärkter Schatten */
+            z-index: 1000;
+        }
+        
+        /* 3D-Effekt und Schatten für das TarifWechsler-Logo */
+        header .logo h1 {
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5), 
+                         0 4px 8px rgba(0, 0, 0, 0.3),
+                         0 0 5px rgba(255, 255, 255, 0.4);
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            transform: perspective(500px) rotateX(5deg);
+            display: inline-block;
+            transition: all 0.3s ease;
+            color: #66a5ff; /* Helles Blau für "Tarif" */
+        }
+        
+        header .logo h1:hover {
+            transform: perspective(500px) rotateX(0deg) scale(1.05);
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.6), 
+                         0 6px 12px rgba(0, 0, 0, 0.4),
+                         0 0 8px rgba(255, 255, 255, 0.5);
+        }
+        
+        header .logo span {
+            color: #ffffff; /* "Wechsler" in Weiß */
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            -webkit-background-clip: unset;
+            -webkit-text-fill-color: unset;
+            background: none;
+        }
+
+        /* Komplett entfernen aller Elemente, die Trennlinien verursachen könnten */
+        .hero-wave, .wave-divider, .cta-wave-top, .cta-wave-bottom, .process-line {
+            display: none !important;
+        }
+        
+        /* Entfernen aller Hintergründe bei Sektionen */
+        .hero, .features, .how-it-works, .testimonials, section, .subpage-hero {
+            background: transparent !important;
+            background-image: none !important;
+            position: relative;
+            z-index: 1;
+            border: none !important;
+        }
+        
+        .subpage-hero::after, .subpage-hero::before, .subpage-hero .container::before {
+            display: none !important;
+        }
+
+        .footer-bottom {
+            background-color: rgba(0,0,0,0.3);
+            margin-top: 0;
+            border-top: none;
+        }
+        
+        .footer-top {
+            background-color: rgba(0,0,0,0.1);
+            margin-bottom: 0;
+            border-bottom: none;
+        }
+        
+        /* Hintergrund-Dreiecke */
+        .background-triangles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        .triangle {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            opacity: 0.05;
+            animation: float-triangles 15s infinite ease-in-out;
+        }
+        
+        @keyframes float-triangles {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(10px, 15px) rotate(5deg); }
+            100% { transform: translate(0, 0) rotate(0deg); }
+        }
+        
+        .triangle:nth-child(1) {
+            border-width: 0 40px 70px 40px;
+            border-color: transparent transparent rgba(255, 255, 255, 0.6) transparent;
+            top: 5%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+        
+        .triangle:nth-child(2) {
+            border-width: 60px 30px 0 30px;
+            border-color: rgba(255, 255, 255, 0.5) transparent transparent transparent;
+            top: 25%;
+            right: 5%;
+            animation-delay: 2s;
+        }
+        
+        .triangle:nth-child(3) {
+            border-width: 0 25px 45px 25px;
+            border-color: transparent transparent rgba(255, 255, 255, 0.5) transparent;
+            bottom: 10%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+        
+        .triangle:nth-child(4) {
+            border-width: 40px 20px 0 20px;
+            border-color: rgba(255, 255, 255, 0.6) transparent transparent transparent;
+            top: 40%;
+            left: 30%;
+            animation-delay: 6s;
+        }
+        
+        .triangle:nth-child(5) {
+            border-width: 0 27px 48px 27px;
+            border-color: transparent transparent rgba(255, 255, 255, 0.5) transparent;
+            bottom: 30%;
+            right: 15%;
+            animation-delay: 8s;
+        }
+        
+        .triangle:nth-child(6) {
+            border-width: 70px 35px 0 35px;
+            border-color: rgba(255, 255, 255, 0.6) transparent transparent transparent;
+            top: 60%;
+            right: 25%;
+            animation-delay: 10s;
+        }
+        
+        .triangle:nth-child(7) {
+            border-width: 0 32px 58px 32px;
+            border-color: transparent transparent rgba(255, 255, 255, 0.5) transparent;
+            top: 75%;
+            left: 5%;
+            animation-delay: 12s;
+        }
+        
+        .triangle:nth-child(8) {
+            border-width: 44px 22px 0 22px;
+            border-color: rgba(255, 255, 255, 0.6) transparent transparent transparent;
+            top: 15%;
+            left: 50%;
+            animation-delay: 14s;
+        }
+        
+        /* Kartendesign für die Über uns Sektion */
+        .about-profile-card, .about-section-block, .philosophy-item, .expertise-card {
+            background-color: rgba(230, 230, 230, 0.85);
+            backdrop-filter: blur(2px);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: all 0.3s ease;
+            color: #333;
+        }
+        
+        .about-profile-card:hover, .about-section-block:hover, .philosophy-item:hover, .expertise-card:hover {
+            background-color: rgba(240, 240, 240, 0.9);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .section-icon, .philosophy-icon, .expertise-icon, .testimonial-icon, .stat-item i {
+            background: linear-gradient(135deg, #1A2C54 0%, #243670 100%);
+            color: white;
+            box-shadow: 0 5px 15px rgba(26, 44, 84, 0.3);
+        }
+        
+        h3, h4 {
+            color: #1A2C54;
+            font-weight: 600;
+        }
+
+        nav ul {
+            display: flex;
+            gap: 20px;
+        }
+        
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 8px 15px;
+            border-radius: 8px;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            background: rgba(255, 255, 255, 0.05);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            border-bottom: none;
+        }
+        
+        nav ul li a:hover, nav ul li a.active {
+            color: #ffffff;
+            background: rgba(66, 133, 244, 0.7);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+            transform: translateY(-3px) rotateX(5deg);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            border-bottom: none;
+        }
+        
+        /* ::after Pseudoelement entfernt, um den Unterstrich zu vermeiden */
+        nav ul li a::after, 
+        nav ul li a:hover::after,
+        nav ul li a.active::after {
+            display: none !important;
+            content: none !important;
+        }
+        
+        @keyframes navPulse {
+            0% { box-shadow: 0 0 0 0 rgba(66, 133, 244, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(66, 133, 244, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(66, 133, 244, 0); }
+        }
+        
+        nav ul li a.active {
+            animation: navPulse 2s infinite;
+        }
+
+        /* Stil für Desktop/Mobile-Ansicht Umschalter */
+        .view-toggle-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: rgba(46, 67, 116, 0.9);
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            padding: 10px 15px;
+            font-size: 14px;
+            font-weight: 600;
+            z-index: 9999;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .view-toggle-btn:hover {
+            background-color: rgba(26, 44, 84, 0.95);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+        }
+        
+        /* Verstecken des Umschalters beim Drucken */
+        @media print {
+            .view-toggle-btn {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hintergrund-Dreiecke -->
+    <div class="background-triangles">
+        <div class="triangle"></div>
+        <div class="triangle"></div>
+        <div class="triangle"></div>
+        <div class="triangle"></div>
+        <div class="triangle"></div>
+        <div class="triangle"></div>
+        <div class="triangle"></div>
+        <div class="triangle"></div>
+    </div>
+    
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>Tarif<span>Wechsler</span></h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Startseite</a></li>
+                    <li><a href="ratgeber.html">Tipps & Rechner</a></li>
+                    <li><a href="kontakt.html">Kontakt</a></li>
+                    <li><a href="ueber-uns.html" class="active">Über uns</a></li>
+                    <li><a href="faq.html">FAQs</a></li>
+                </ul>
+            </nav>
+            <div class="mobile-menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <section class="subpage-hero">
+        <div class="hero-content">
+            <div class="container">
+                <div class="hero-text centered">
+                    <h2>Ihr persönlicher Energieberater</h2>
+                    <p>Erfahrung und Kompetenz für optimale Energietarife</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="about-section">
+        <div class="container">
+            <div class="about-profile-card">
+                <div class="profile-image-container">
+                    <img src="images/Profil.jpeg" alt="Thomas Müller - Energieberater">
+                </div>
+                <div class="profile-content">
+                    <h3>Thomas Müller</h3>
+                    <p class="profile-title">Energieberater & Tarifexperte</p>
+                    
+                    <div class="profile-stats">
+                        <div class="stat-item">
+                            <i class="fas fa-chart-line"></i>
+                            <div class="stat-info">
+                                <span class="stat-value">10+</span>
+                                <span class="stat-label">Jahre Erfahrung</span>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-users"></i>
+                            <div class="stat-info">
+                                <span class="stat-value">500+</span>
+                                <span class="stat-label">zufriedene Kunden</span>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-euro-sign"></i>
+                            <div class="stat-info">
+                                <span class="stat-value">Ø 320€</span>
+                                <span class="stat-label">Einsparung pro Jahr</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="about-content">
+                <div class="about-section-block">
+                    <div class="section-icon">
+                        <i class="fas fa-route"></i>
+                    </div>
+                    <div class="section-text">
+                        <h3>Mein Weg zum Energieexperten</h3>
+                        <p>Als ehemaliger Mitarbeiter eines großen Energieversorgers kenne ich die Preisstrukturen und Geschäftsmodelle der Branche von innen. Nach 7 Jahren in der Tarifabteilung habe ich mich entschieden, mein Wissen direkt den Verbrauchern zur Verfügung zu stellen.</p>
+                        
+                        <p>Seit 2016 berate ich unabhängig Privathaushalte und kleine Unternehmen bei der Optimierung ihrer Energiekosten. Dabei steht für mich die individuell beste Lösung immer im Vordergrund – nicht der höchste Bonus oder Provision.</p>
+                    </div>
+                </div>
+                
+                <div class="about-section-block">
+                    <div class="section-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <div class="section-text">
+                        <h3>Meine Beratungsphilosophie</h3>
+                        <p>Ich glaube, dass jeder das Recht auf faire Energiepreise hat. Meine Beratung ist daher:</p>
+                        
+                        <div class="philosophy-grid">
+                            <div class="philosophy-item">
+                                <div class="philosophy-icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="philosophy-text">
+                                    <h4>Transparent</h4>
+                                    <p>Alle Vor- und Nachteile werden offen angesprochen.</p>
+                                </div>
+                            </div>
+                            <div class="philosophy-item">
+                                <div class="philosophy-icon">
+                                    <i class="fas fa-user-alt"></i>
+                                </div>
+                                <div class="philosophy-text">
+                                    <h4>Individuell</h4>
+                                    <p>Ihre persönliche Situation steht im Mittelpunkt.</p>
+                                </div>
+                            </div>
+                            <div class="philosophy-item">
+                                <div class="philosophy-icon">
+                                    <i class="fas fa-leaf"></i>
+                                </div>
+                                <div class="philosophy-text">
+                                    <h4>Nachhaltig</h4>
+                                    <p>Mir ist wichtig, dass Sie langfristig sparen.</p>
+                                </div>
+                            </div>
+                            <div class="philosophy-item">
+                                <div class="philosophy-icon">
+                                    <i class="fas fa-balance-scale"></i>
+                                </div>
+                                <div class="philosophy-text">
+                                    <h4>Unabhängig</h4>
+                                    <p>Ich bin keinem Anbieter verpflichtet.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="about-section-block">
+                    <div class="section-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <div class="section-text">
+                        <h3>Meine Expertise</h3>
+                        <div class="expertise-grid">
+                            <div class="expertise-card">
+                                <div class="expertise-icon">
+                                    <i class="fas fa-bolt"></i>
+                                </div>
+                                <h4>Stromtarife</h4>
+                                <p>Optimierung von Haushaltsstromtarifen, Nachtstrom, Heizstrom und Spezialtarifen</p>
+                            </div>
+                            <div class="expertise-card">
+                                <div class="expertise-icon">
+                                    <i class="fas fa-fire"></i>
+                                </div>
+                                <h4>Gastarife</h4>
+                                <p>Vergleich und Optimierung von Erdgastarifen für verschiedene Verbrauchsprofile</p>
+                            </div>
+                            <div class="expertise-card">
+                                <div class="expertise-icon">
+                                    <i class="fas fa-seedling"></i>
+                                </div>
+                                <h4>Ökostrom</h4>
+                                <p>Beratung zu echten und zertifizierten Ökostromtarifen ohne Greenwashing</p>
+                            </div>
+                            <div class="expertise-card">
+                                <div class="expertise-icon">
+                                    <i class="fas fa-gift"></i>
+                                </div>
+                                <h4>Bonus-Optimierung</h4>
+                                <p>Strategien zum optimalen Nutzen von Wechselboni und Rabatten</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="about-testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2>Das sagen meine Kunden</h2>
+                <p>Erfahrungen und Bewertungen von zufriedenen Klienten</p>
+            </div>
+            <div class="about-testimonials-grid">
+                <div class="about-testimonial-card">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p>"Herr Müller hat mir nicht nur einen günstigeren Tarif gefunden, sondern auch verständlich erklärt, worauf ich bei Verträgen achten muss."</p>
+                    <div class="testimonial-author">
+                        <h4>Stefan K.</h4>
+                        <span>Hamburg</span>
+                    </div>
+                </div>
+                
+                <div class="about-testimonial-card">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p>"Die Beratung per WhatsApp war sehr angenehm und unkompliziert. Ich spare jetzt jährlich über 200€ bei meinen Energiekosten!"</p>
+                    <div class="testimonial-author">
+                        <h4>Claudia M.</h4>
+                        <span>München</span>
+                    </div>
+                </div>
+                
+                <div class="about-testimonial-card">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p>"Nach Jahren beim teuren Grundversorger hat mir Herr Müller geholfen, endlich zu wechseln. Der Prozess war viel einfacher als gedacht."</p>
+                    <div class="testimonial-author">
+                        <h4>Michael B.</h4>
+                        <span>Berlin</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <div class="cta-content-wrapper">
+                    <div class="cta-text">
+                        <h2>Bereit für Ihre persönliche Beratung?</h2>
+                        <p>Nehmen Sie noch heute Kontakt auf und lassen Sie uns gemeinsam Ihre Energiekosten optimieren!</p>
+                        <a href="kontakt.html" class="btn btn-primary">Beratungstermin vereinbaren</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-top">
+            <div class="container">
+                <div class="footer-grid">
+                    <div class="footer-info">
+                        <h3>TarifWechsler</h3>
+                        <p>Ihr Partner für transparente und individuelle Energieberatung. Wir helfen Ihnen, den optimalen Tarif für Ihre Bedürfnisse zu finden.</p>
+                        <div class="social-icons">
+                            <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                    <div class="footer-links">
+                        <h3>Schnellzugriff</h3>
+                        <ul>
+                            <li><a href="index.html">Startseite</a></li>
+                            <li><a href="ratgeber.html">Tipps & Rechner</a></li>
+                            <li><a href="kontakt.html">Kontakt</a></li>
+                            <li><a href="ueber-uns.html">Über uns</a></li>
+                            <li><a href="faq.html">FAQs</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-links">
+                        <h3>Service</h3>
+                        <ul>
+                            <li><a href="#">Stromtarifberatung</a></li>
+                            <li><a href="#">Gastarifberatung</a></li>
+                            <li><a href="#">Ökostrom-Angebote</a></li>
+                            <li><a href="#">FAQ</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-contact">
+                        <h3>Kontakt</h3>
+                        <p><i class="fas fa-envelope"></i> info@tarifwechsler.de</p>
+                        <p><i class="fas fa-phone"></i> +49 123 456 789</p>
+                        <p><i class="fas fa-map-marker-alt"></i> Energiestraße 1, 10115 Berlin</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <p>&copy; 2023 TarifWechsler. Alle Rechte vorbehalten.</p>
+                <div class="footer-legal">
+                    <a href="#">Impressum</a>
+                    <a href="#">Datenschutz</a>
+                    <a href="#">AGB</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        document.querySelector('.mobile-menu-toggle').addEventListener('click', function() {
+            document.querySelector('nav ul').classList.toggle('show');
+        });
+    </script>
+</body>
+</html> 

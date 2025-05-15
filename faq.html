@@ -1,0 +1,1486 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#2E4374">
+    <meta name="format-detection" content="telephone=no">
+    <title>Häufig gestellte Fragen | TarifWechsler</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script>
+        // Prüfen, ob das Gerät ein Mobilgerät ist
+        function isMobile() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+
+        // Desktop-Ansicht aktivieren/deaktivieren
+        function toggleDesktopView() {
+            const html = document.documentElement;
+            if (html.classList.contains('desktop-view')) {
+                html.classList.remove('desktop-view');
+                localStorage.setItem('desktopView', 'false');
+                document.getElementById('viewToggle').textContent = 'Desktop-Ansicht';
+            } else {
+                html.classList.add('desktop-view');
+                localStorage.setItem('desktopView', 'true');
+                document.getElementById('viewToggle').textContent = 'Mobile-Ansicht';
+            }
+        }
+
+        // Gespeicherte Einstellung beim Laden anwenden
+        document.addEventListener('DOMContentLoaded', function() {
+            if (isMobile()) {
+                // View-Toggle-Button nur auf Mobilgeräten anzeigen
+                const viewToggleBtn = document.createElement('button');
+                viewToggleBtn.id = 'viewToggle';
+                viewToggleBtn.className = 'view-toggle-btn';
+                viewToggleBtn.textContent = 'Desktop-Ansicht';
+                viewToggleBtn.addEventListener('click', toggleDesktopView);
+                document.body.appendChild(viewToggleBtn);
+                
+                // Gespeicherte Einstellung anwenden
+                const savedView = localStorage.getItem('desktopView');
+                if (savedView === 'true') {
+                    document.documentElement.classList.add('desktop-view');
+                    viewToggleBtn.textContent = 'Mobile-Ansicht';
+                }
+            }
+        });
+    </script>
+    <style>
+        /* Grundlegende Farbverlauf-Anpassung - wie auf Index und Ratgeber */
+        body {
+            background: linear-gradient(to bottom, #2E4374 0%, #243156 30%, #1A2C54 60%, #141d37 85%, #121824 100%);
+            background-attachment: fixed;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        
+        /* Entfernen aller Abstände zwischen Sektionen */
+        section {
+            margin: 0 !important;
+            padding: 0 !important; /* Kein Padding mehr */
+            background: transparent !important;
+            background-image: none !important;
+            position: relative;
+            border: none !important;
+        }
+        
+        section::before, section::after {
+            display: none !important;
+        }
+        
+        /* Grundlegende Stile für die Headerleiste */
+        header {
+            background-color: rgba(80, 80, 80, 0.5); /* Grauer transparenter Hintergrund */
+            backdrop-filter: blur(5px); /* Glaseffekt */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Verstärkter Schatten */
+            z-index: 1000;
+            border-bottom: none !important;
+            margin-bottom: 300px !important; /* Maximaler Abstand nach dem Header */
+        }
+        
+        /* 3D-Effekt und Schatten für das TarifWechsler-Logo */
+        header .logo h1 {
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5), 
+                         0 4px 8px rgba(0, 0, 0, 0.3),
+                         0 0 5px rgba(255, 255, 255, 0.4);
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            transform: perspective(500px) rotateX(5deg);
+            display: inline-block;
+            transition: all 0.3s ease;
+            color: #66a5ff; /* Helles Blau für "Tarif" */
+        }
+        
+        header .logo h1:hover {
+            transform: perspective(500px) rotateX(0deg) scale(1.05);
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.6), 
+                         0 6px 12px rgba(0, 0, 0, 0.4),
+                         0 0 8px rgba(255, 255, 255, 0.5);
+        }
+        
+        header .logo span {
+            color: #ffffff; /* "Wechsler" in Weiß */
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            -webkit-background-clip: unset;
+            -webkit-text-fill-color: unset;
+            background: none;
+        }
+        
+        nav ul {
+            display: flex;
+            gap: 20px;
+        }
+        
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 8px 15px;
+            border-radius: 8px;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            background: rgba(255, 255, 255, 0.05);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            border-bottom: none; /* Explizit keinen unteren Rand setzen */
+        }
+        
+        nav ul li a:hover, nav ul li a.active {
+            color: #ffffff;
+            background: rgba(66, 133, 244, 0.7);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+            transform: translateY(-3px) rotateX(5deg);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            border-bottom: none; /* Explizit keinen unteren Rand setzen */
+        }
+        
+        /* ::after Pseudoelement entfernen */
+        nav ul li a::after, 
+        nav ul li a:hover::after,
+        nav ul li a.active::after {
+            display: none !important;
+            content: none !important;
+        }
+        
+        @keyframes navPulse {
+            0% { box-shadow: 0 0 0 0 rgba(66, 133, 244, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(66, 133, 244, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(66, 133, 244, 0); }
+        }
+        
+        nav ul li a.active {
+            animation: navPulse 2s infinite;
+        }
+        
+        /* Hintergrund-Kreise (wie in index.html) */
+        .background-circles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.05);
+            animation: float 15s infinite ease-in-out;
+        }
+        
+        @keyframes float {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(10px, 15px) rotate(5deg); }
+            100% { transform: translate(0, 0) rotate(0deg); }
+        }
+        
+        .circle:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 5%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+        
+        .circle:nth-child(2) {
+            width: 60px;
+            height: 60px;
+            top: 25%;
+            right: 5%;
+            animation-delay: 2s;
+        }
+        
+        .circle:nth-child(3) {
+            width: 50px;
+            height: 50px;
+            bottom: 10%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+        
+        .circle:nth-child(4) {
+            width: 40px;
+            height: 40px;
+            top: 40%;
+            left: 30%;
+            animation-delay: 6s;
+        }
+        
+        .circle:nth-child(5) {
+            width: 55px;
+            height: 55px;
+            bottom: 30%;
+            right: 15%;
+            animation-delay: 8s;
+        }
+        
+        .circle:nth-child(6) {
+            width: 70px;
+            height: 70px;
+            top: 60%;
+            right: 25%;
+            animation-delay: 10s;
+        }
+        
+        .circle:nth-child(7) {
+            width: 65px;
+            height: 65px;
+            top: 75%;
+            left: 5%;
+            animation-delay: 12s;
+        }
+        
+        .circle:nth-child(8) {
+            width: 45px;
+            height: 45px;
+            top: 15%;
+            left: 50%;
+            animation-delay: 14s;
+        }
+        
+        /* Komplett entfernen aller Elemente, die Trennlinien verursachen könnten */
+        .hero-wave, .wave-divider, .cta-wave-top, .cta-wave-bottom, .process-line {
+            display: none !important;
+        }
+        
+        /* Entfernen aller Hintergründe bei Sektionen */
+        .hero, .features, .how-it-works, .testimonials, section, .subpage-hero {
+            background: transparent !important;
+            background-image: none !important;
+            position: relative;
+            z-index: 1;
+            border: none !important;
+        }
+        
+        .subpage-hero::after, .subpage-hero::before, .subpage-hero .container::before {
+            display: none !important;
+        }
+        
+        .footer-bottom {
+            background-color: rgba(0,0,0,0.3);
+            margin-top: 0;
+            border-top: none;
+        }
+        
+        .footer-top {
+            background-color: rgba(0,0,0,0.1);
+            margin-bottom: 0;
+            border-bottom: none;
+        }
+        
+        /* FAQ-spezifische Anpassungen - praktisch keine Abstände */
+        .faq-section {
+            background: transparent;
+            padding: 0 !important;
+            margin: 0 !important;
+            padding-top: 100px !important; /* Maximierter Abstand am Anfang der Sektion */
+            margin-top: 100px !important; /* Maximierter Abstand nach oben */
+        }
+        
+        /* FAQ-spezifische Stile - minimale Abstände */
+        .faq-header {
+            text-align: center;
+            margin: 0 auto !important;
+            padding: 0 !important;
+            background-color: transparent;
+            box-shadow: none;
+        }
+        
+        .faq-header h2 {
+            font-size: 24px;
+            color: #fff;
+            margin-top: 20px !important;
+            margin-bottom: 15px !important;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        
+        .faq-header p {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 800px;
+            margin: 0 auto 5px !important; /* Minimaler Abstand unten */
+            font-weight: 400;
+            line-height: 1.2;
+            margin-bottom: 30px !important; /* Vergrößerter Abstand nach dem Text */
+        }
+        
+        /* Energietarife-Badges kompakter */
+        .energy-badges {
+            display: flex;
+            justify-content: center;
+            gap: 8px; /* Sehr geringer Abstand */
+            margin: 8px 0 !important; /* Sehr geringer Abstand */
+            margin-top: 40px !important; /* Vergrößerter Abstand vor den Badges */
+        }
+        
+        .energy-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 16px;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .energy-badge:hover {
+            transform: translateY(-3px);
+        }
+        
+        .energy-badge.strom {
+            background-color: #ffc107;
+            color: white;
+            background-image: linear-gradient(135deg, #ffb74d 0%, #ff9800 100%);
+        }
+        
+        .energy-badge.gas {
+            background-color: #0056b3;
+            color: white;
+            background-image: linear-gradient(135deg, #4285f4 0%, #0056b3 100%);
+        }
+        
+        .energy-badge i {
+            margin-right: 8px;
+            font-size: 18px;
+        }
+        
+        .faq-tabs {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            margin-bottom: 1.5rem;
+            width: 100% !important;
+        }
+        
+        .faq-tabs-nav {
+            display: flex;
+            justify-content: center;
+            gap: 1rem; /* Vergrößerter Abstand zwischen Buttons */
+            flex-wrap: wrap;
+            margin-bottom: 1.2rem; /* Reduzierter Abstand */
+            padding: 10px;
+            background-color: rgba(80, 80, 80, 0.4);
+            backdrop-filter: blur(5px);
+            border-radius: 60px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+        
+        .faq-tab-btn {
+            padding: 12px 20px;
+            border: none;
+            background-color: rgba(80, 80, 80, 0.5);
+            color: #fff;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            width: 150px;
+            justify-content: center;
+        }
+        
+        .faq-tab-btn:hover {
+            background-color: rgba(100, 100, 100, 0.7);
+            transform: translateY(-2px);
+        }
+        
+        .faq-tab-btn.active {
+            background-color: rgba(100, 100, 100, 0.7);
+            color: #ffffff;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Überschreiben der spezifischen Stile für strom und gas */
+        .faq-tab-btn.strom, .faq-tab-btn.gas {
+            color: #fff;
+            background-color: rgba(80, 80, 80, 0.5);
+        }
+        
+        .faq-tab-btn.strom:hover, .faq-tab-btn.strom.active,
+        .faq-tab-btn.gas:hover, .faq-tab-btn.gas.active {
+            background-color: rgba(100, 100, 100, 0.7);
+            color: #fff;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .faq-search {
+            display: flex;
+            max-width: 96% !important; /* Etwas kleiner als die volle Breite */
+            width: 96% !important;
+            margin: 0 auto;
+            position: relative;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-radius: 50px;
+            overflow: hidden;
+        }
+        
+        #faq-search-input {
+            width: 100%;
+            padding: 16px 25px;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background-color: white;
+        }
+        
+        #faq-search-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.2);
+        }
+        
+        .search-btn {
+            position: absolute;
+            right: 8px;
+            top: 8px;
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            height: calc(100% - 16px);
+            width: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .search-btn:hover {
+            background-color: #004494;
+            transform: scale(1.05);
+        }
+        
+        .search-btn i {
+            font-size: 16px;
+        }
+        
+        .faq-accordion-container {
+            margin-bottom: 4rem; /* Vergrößerter Abstand zum Footer */
+        }
+        
+        .faq-tab-content {
+            display: none;
+            background-color: rgba(80, 80, 80, 0.3) !important; /* Dunkelgrau mit Transparenz */
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            padding: 2.5rem; /* Erhöhtes Padding für bessere Innenabstände */
+        }
+        
+        .faq-tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .faq-accordion {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .faq-item {
+            background-color: rgba(230, 230, 230, 0.85) !important; /* Transparentes Grau statt Weiß */
+            backdrop-filter: blur(2px);
+            border-radius: 12px;
+            margin-bottom: 1.5rem; /* Vergrößerter Abstand zwischen FAQ-Items */
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        
+        .faq-item:hover {
+            box-shadow: 0 12px 25px rgba(0,0,0,0.12);
+            transform: translateY(-2px);
+        }
+        
+        .faq-question {
+            padding: 20px 25px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            background-color: rgba(230, 230, 230, 0.85) !important; /* Transparentes Grau statt Weiß */
+            border-bottom: 1px solid rgba(200, 200, 200, 0.5);
+            transition: all 0.3s ease;
+        }
+        
+        .faq-question h3 {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 600;
+            color: #2c3e50;
+            padding-right: 40px;
+            line-height: 1.5;
+        }
+        
+        .faq-icon {
+            min-width: 24px;
+            text-align: center;
+            background-color: #f5f7fa;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .faq-icon i {
+            color: #607d8b;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        
+        .faq-icon .fa-minus {
+            display: none;
+        }
+        
+        .faq-item.active .faq-question {
+            background-color: #0056b3;
+            color: white;
+            border-bottom: none;
+        }
+        
+        .faq-item.active .faq-icon {
+            background-color: white;
+        }
+        
+        .faq-item.active .faq-icon i {
+            color: #0056b3;
+        }
+        
+        .faq-item.active .faq-icon .fa-plus {
+            display: none;
+        }
+        
+        .faq-item.active .faq-icon .fa-minus {
+            display: inline-block;
+        }
+        
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+            background-color: rgba(230, 230, 230, 0.85) !important; /* Transparentes Grau statt Weiß */
+        }
+        
+        .faq-item.active .faq-answer {
+            max-height: 1000px;
+            padding: 20px 25px;
+            background-color: white;
+        }
+        
+        .faq-answer p {
+            margin: 0;
+            color: #546e7a;
+            line-height: 1.7;
+            font-size: 15px;
+        }
+        
+        .faq-highlight {
+            color: #0056b3;
+            font-weight: 600;
+        }
+        
+        .faq-not-found {
+            text-align: center;
+            background-color: rgba(230, 230, 230, 0.85);
+            backdrop-filter: blur(2px);
+            padding: 50px 30px;
+            border-radius: 15px;
+            max-width: 800px;
+            margin: 30px auto;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            position: relative;
+            color: #333;
+            transition: all 0.3s ease;
+        }
+        
+        .faq-not-found:hover {
+            background-color: rgba(240, 240, 240, 0.9);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .faq-not-found:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #1A2C54 0%, #243670 100%);
+        }
+        
+        .faq-not-found .category-icon {
+            margin-bottom: 20px;
+            border: none;
+            background: linear-gradient(135deg, #1A2C54 0%, #243670 100%);
+            width: 90px;
+            height: 90px;
+            box-shadow: 0 5px 15px rgba(26, 44, 84, 0.3);
+        }
+        
+        .faq-not-found .category-icon i {
+            color: white;
+        }
+        
+        .faq-not-found h3 {
+            margin-top: 0;
+            color: #1A2C54;
+            font-size: 24px;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        
+        .faq-not-found p {
+            margin-bottom: 25px;
+            color: #333;
+            font-size: 16px;
+            font-weight: 400;
+        }
+        
+        .faq-not-found .btn {
+            display: inline-block;
+            min-width: 200px;
+            font-size: 16px;
+            padding: 14px 28px;
+            background-color: #1A2C54;
+            border: none;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            border-radius: 5px;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .faq-not-found .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+            background-color: #243670;
+        }
+        
+        /* Category Icon Style */
+        .category-icon {
+            background-color: #0056b3 !important; /* Blau */
+            backdrop-filter: blur(5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 2.5rem; /* Vergrößerter Abstand nach unten */
+            transition: all 0.3s ease;
+            width: 100px; 
+            height: 100px;
+        }
+        
+        .category-icon i,
+        .fa-info-circle {
+            color: #ffffff !important; /* Weiß */
+            font-size: 40px;
+        }
+        
+        #tab-strom .category-icon {
+            background-color: rgba(255, 152, 0, 0.2);
+        }
+        
+        #tab-strom .category-icon i {
+            color: #ff9800;
+        }
+        
+        #tab-gas .category-icon {
+            background-color: rgba(0, 86, 179, 0.2);
+        }
+        
+        #tab-gas .category-icon i {
+            color: #0056b3;
+        }
+        
+        .category-title {
+            text-align: center;
+            margin-bottom: 3rem; /* Vergrößerter Abstand zu den FAQ-Items */
+            color: #fff;
+            font-size: 26px; /* Etwas größere Überschrift */
+            position: relative;
+            padding-bottom: 12px;
+            font-weight: 600;
+        }
+        
+        .category-title:after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background-color: #0056b3 !important; /* Blau beibehalten */
+            border-radius: 3px;
+        }
+        
+        #tab-strom .category-title:after {
+            background-color: #ff9800;
+        }
+        
+        #tab-gas .category-title:after {
+            background-color: #0056b3;
+        }
+        
+        .subpage-hero {
+            background: transparent !important; /* Kein Hintergrund mehr */
+            position: relative;
+            overflow: hidden;
+            padding: 10px 0 0 !important; /* Nur minimales Padding oben */
+            margin: 0 !important;
+            border: none !important;
+        }
+        
+        .subpage-hero:before, .subpage-hero:after {
+            display: none !important;
+        }
+        
+        .subpage-hero .container:before, .subpage-hero .container:after {
+            display: none !important;
+        }
+        
+        .subpage-hero .hero-text {
+            margin: 0 auto !important;
+            padding-bottom: 0 !important;
+        }
+        
+        .subpage-hero .hero-text h2 {
+            color: white;
+            font-size: 26px;
+            margin-bottom: 3px !important; /* Minimaler Abstand */
+            margin-top: 0 !important;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .subpage-hero .hero-text p {
+            color: rgba(255,255,255,0.95);
+            font-size: 14px;
+            max-width: 800px;
+            margin: 0 auto 5px !important; /* Minimaler Abstand unten */
+            font-weight: 400;
+            line-height: 1.2;
+        }
+        
+        /* Buttons konsistent mit Index-Seite */
+        .btn-primary {
+            background-color: #0056b3;
+            color: white;
+            text-decoration: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: background-color 0.3s;
+            display: inline-block;
+        }
+        
+        .btn-primary:hover {
+            background-color: #004494;
+        }
+        
+        /* Responsive Design für mobile Geräte */
+        @media (max-width: 768px) {
+            section {
+                padding: 2rem 0; /* Geringeres Padding auf Mobilgeräten */
+            }
+            
+            .faq-header {
+                margin-bottom: 2.5rem; /* Kleinerer Abstand auf Mobilgeräten */
+            }
+            
+            .faq-tabs {
+                gap: 1.5rem;
+                margin-bottom: 2rem;
+            }
+            
+            .faq-tabs-nav {
+                flex-direction: row;
+                overflow-x: auto;
+                padding-bottom: 10px;
+                justify-content: flex-start;
+                background-color: rgba(255, 255, 255, 0.1);
+                box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            }
+            
+            .faq-tab-btn {
+                flex: 0 0 auto;
+                white-space: nowrap;
+                padding: 10px 16px;
+                font-size: 14px;
+            }
+            
+            .faq-question h3 {
+                font-size: 15px;
+            }
+            
+            .energy-badges {
+                flex-direction: column;
+                align-items: center;
+                gap: 12px;
+            }
+            
+            .category-icon {
+                width: 85px; /* Kleinere Icons auf Mobilgeräten */
+                height: 85px;
+                margin-bottom: 1.5rem;
+            }
+            
+            .category-icon i {
+                font-size: 36px;
+            }
+            
+            .category-title {
+                font-size: 22px;
+                margin-bottom: 2rem;
+            }
+            
+            .faq-tab-content {
+                padding: 1.5rem;
+            }
+            
+            .faq-question {
+                padding: 15px 20px;
+            }
+            
+            .faq-item.active .faq-answer {
+                padding: 15px 20px;
+            }
+            
+            .faq-not-found {
+                padding: 30px 20px;
+            }
+            
+            .faq-not-found .btn {
+                min-width: 180px;
+                padding: 12px 20px;
+            }
+        }
+        
+        /* Neue Stile für die zusammengeführte Struktur */
+        .faq-header .main-title {
+            font-size: 32px; /* Größere, besser sichtbare Überschrift */
+            margin: 0 0 5px !important;
+            padding: 0;
+            font-weight: 700;
+            color: white;
+            display: block !important; /* Sicherstellen, dass die Überschrift angezeigt wird */
+            visibility: visible !important;
+        }
+        
+        .faq-header .subtitle {
+            font-size: 14px;
+            margin: 0 auto 25px !important; /* Mittlerer Abstand nach dem Untertitel */
+            padding: 0;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        /* Zweite Überschrift mit eigenem Stil */
+        .faq-header h2:not(.main-title) {
+            font-size: 28px;
+            color: #fff;
+            margin: 0 0 10px !important;
+            padding: 0;
+            font-weight: 700;
+        }
+        
+        .faq-header .highlight {
+            color: #66a5ff;
+            font-weight: 700;
+        }
+        
+        /* Alles mit weniger Abstand versehen */
+        .faq-section {
+            padding-top: 10px !important; /* Minimalster Abstand zum Header */
+        }
+        
+        /* FAQ-spezifische Stile - absolut minimale Abstände */
+        .faq-header {
+            text-align: center;
+            margin: 0 auto !important;
+            padding: 0 !important;
+            background-color: transparent;
+            box-shadow: none;
+        }
+        
+        /* Entferne alle verbleibenden Abstände zwischen den Elementen */
+        section.faq-section {
+            border-top: none !important;
+        }
+        
+        header {
+            border-bottom: none !important;
+            margin-bottom: 0 !important;
+        }
+        
+        .faq-header h2 {
+            font-size: 24px;
+            color: #fff;
+            margin: 5px 0 3px !important;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        
+        /* Abstand zwischen der Beschreibung und den Buttons */
+        .faq-header + .energy-badges,
+        .faq-header p + .energy-badges,
+        .faq-header p + div {
+            margin-top: 40px !important;
+        }
+        
+        /* Zusätzlicher Stil für explizit größeren Abstand */
+        .faq-header p + * {
+            margin-top: 40px !important;
+        }
+        
+        /* Stil für das Info-Icon und seinen Container */
+        .info-icon-container,
+        .category-icon {
+            background-color: rgba(80, 80, 80, 0.5) !important; /* Dunkelgrau */
+            backdrop-filter: blur(5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Möglicherweise vorhandene andere Selektoren, die das Info-Icon betreffen könnten */
+        .fa-info-circle,
+        .info-icon,
+        .info-circle {
+            color: #ffffff !important; /* Weiß */
+        }
+        
+        /* Wenn ein spezifischer Selektor für den Container des Info-Icons verwendet wird */
+        .faq-tab-content .category-icon,
+        .faq-accordion-container .category-icon,
+        #tab-strom .category-icon,
+        #tab-gas .category-icon,
+        #tab-beratung .category-icon {
+            background-color: rgba(80, 80, 80, 0.5) !important; 
+            backdrop-filter: blur(5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        #tab-allgemein .category-icon {
+            background-color: #0056b3 !important; /* Blau */
+            backdrop-filter: blur(5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Großer Container-Hintergrund */
+        .faq-tab-content,
+        .faq-accordion-container {
+            background-color: rgba(80, 80, 80, 0.3) !important; /* Dunkelgrau mit Transparenz */
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .faq-accordion-item {
+            background-color: rgba(230, 230, 230, 0.85);
+            backdrop-filter: blur(2px);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: all 0.3s ease;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .faq-accordion-item:hover {
+            background-color: rgba(240, 240, 240, 0.9);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Stil für Desktop/Mobile-Ansicht Umschalter */
+        .view-toggle-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: rgba(46, 67, 116, 0.9);
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            padding: 10px 15px;
+            font-size: 14px;
+            font-weight: 600;
+            z-index: 9999;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .view-toggle-btn:hover {
+            background-color: rgba(26, 44, 84, 0.95);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+        }
+        
+        /* Verstecken des Umschalters beim Drucken */
+        @media print {
+            .view-toggle-btn {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hintergrund-Kreise -->
+    <div class="background-circles">
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+    </div>
+    
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>Tarif<span>Wechsler</span></h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Startseite</a></li>
+                    <li><a href="ratgeber.html">Tipps & Rechner</a></li>
+                    <li><a href="kontakt.html">Kontakt</a></li>
+                    <li><a href="ueber-uns.html">Über uns</a></li>
+                    <li><a href="faq.html" class="active">FAQs</a></li>
+                </ul>
+            </nav>
+            <div class="mobile-menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero-Bereich komplett entfernt und mit FAQ-Section zusammengeführt -->
+    <section class="faq-section">
+        <div class="container">
+            <div class="faq-header">
+                <!-- Hauptüberschrift und Untertitel entfernt -->
+                
+                <h2 style="margin-top: 0;">Was Sie über <span class="highlight">Energietarife</span> wissen sollten</h2>
+                <p>Wir helfen Ihnen, Klarheit in die Welt der Strom- und Gastarife zu bringen und jährlich zu sparen</p>
+                
+                <div class="energy-badges">
+                    <div class="energy-badge strom">
+                        <i class="fas fa-bolt"></i> Stromtarife optimieren
+                    </div>
+                    <div class="energy-badge gas">
+                        <i class="fas fa-fire"></i> Gaskosten senken
+                    </div>
+                </div>
+            </div>
+        
+            <div class="faq-tabs">
+                <div class="faq-tabs-nav">
+                    <button class="faq-tab-btn active" data-target="tab-allgemein">
+                        Allgemein
+                    </button>
+                    <button class="faq-tab-btn strom" data-target="tab-strom">
+                        <i class="fas fa-bolt"></i> Stromtarife
+                    </button>
+                    <button class="faq-tab-btn gas" data-target="tab-gas">
+                        <i class="fas fa-fire"></i> Gastarife
+                    </button>
+                    <button class="faq-tab-btn" data-target="tab-beratung">
+                        <i class="fas fa-comments"></i> Beratung
+                    </button>
+                </div>
+                
+                <div class="faq-search">
+                    <input type="text" id="faq-search-input" placeholder="Ihre Frage zu Strom oder Gas">
+                    <button class="search-btn"><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+
+            <div class="faq-accordion-container">
+                <div class="faq-tab-content active" id="tab-allgemein">
+                    <div class="category-icon">
+                        <i class="fas fa-info-circle"></i>
+                    </div>
+                    <h3 class="category-title">Allgemeine Fragen zu Ihren Energietarifen</h3>
+                    
+                    <div class="faq-accordion">
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <h3>Was macht TarifWechsler anders als herkömmliche Vergleichsportale?</h3>
+                                <div class="faq-icon">
+                                    <i class="fas fa-plus"></i>
+                                    <i class="fas fa-minus"></i>
+                                </div>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Anders als automatisierte Vergleichsportale bieten wir eine <span class="faq-highlight">persönliche Beratung</span>, die auf Ihre individuellen Bedürfnisse eingeht. Wir berücksichtigen nicht nur den Preis, sondern auch Vertragsbedingungen, Kundenservice-Qualität und versteckte Kosten bei <span class="faq-highlight">Energie-Tarifen</span>. Zudem begleiten wir Sie beim gesamten Wechselprozess und stehen auch nach dem Wechsel als Ansprechpartner zur Verfügung.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <h3>Ist die Beratung kostenlos?</h3>
+                                <div class="faq-icon">
+                                    <i class="fas fa-plus"></i>
+                                    <i class="fas fa-minus"></i>
+                                </div>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Ja, unsere Beratung ist für Sie komplett kostenfrei. Wir finanzieren uns über Provisionen der Energieanbieter, wenn ein Vertrag zustande kommt. Dadurch entstehen für Sie keine zusätzlichen Kosten – im Gegenteil, Sie profitieren von Einsparungen durch optimierte Tarife.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <h3>Wie oft sollte ich meinen Energieanbieter wechseln?</h3>
+                                <div class="faq-icon">
+                                    <i class="fas fa-plus"></i>
+                                    <i class="fas fa-minus"></i>
+                                </div>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Grundsätzlich empfehlen wir, Ihre Energieverträge alle 1-2 Jahre zu überprüfen. Nach Ablauf der Mindestvertragslaufzeit erhöhen viele Anbieter ihre Preise, während Neukunden von attraktiven Boni und niedrigen Einstiegspreisen profitieren. Wir können Sie bei Wunsch automatisch an wichtige Termine wie Kündigungsfristen erinnern.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <h3>Arbeiten Sie mit allen Energieanbietern zusammen?</h3>
+                                <div class="faq-icon">
+                                    <i class="fas fa-plus"></i>
+                                    <i class="fas fa-minus"></i>
+                                </div>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Wir arbeiten mit einer großen Auswahl an seriösen Energieanbietern zusammen, jedoch nicht mit allen am Markt verfügbaren. Wir haben bewusst Anbieter ausgeschlossen, die durch schlechten Kundenservice, versteckte Kostenfallen oder unseriöse Geschäftspraktiken negativ aufgefallen sind. Unser Ziel ist es, Ihnen nur qualitativ hochwertige Angebote zu unterbreiten.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="faq-tab-content" id="tab-strom">
+                    <div class="category-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3 class="category-title">Alles über Stromtarife & Sparpotenziale</h3>
+                    
+                    <div class="faq-accordion">
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <h3>Was ist der Unterschied zwischen Grund- und Arbeitspreis?</h3>
+                                <div class="faq-icon">
+                                    <i class="fas fa-plus"></i>
+                                    <i class="fas fa-minus"></i>
+                                </div>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Der Grundpreis ist ein fester monatlicher Betrag, den Sie unabhängig von Ihrem Verbrauch zahlen. Er deckt die Kosten für Messung, Abrechnung und Netzanschluss ab. Der Arbeitspreis wird pro verbrauchter Kilowattstunde (kWh) berechnet und macht meist den größeren Teil Ihrer Rechnung aus. Bei der Tarifauswahl ist es wichtig, beide Komponenten zu berücksichtigen und auf Ihr Verbrauchsprofil abzustimmen.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <h3>Was ist echter Ökostrom?</h3>
+                                <div class="faq-icon">
+                                    <i class="fas fa-plus"></i>
+                                    <i class="fas fa-minus"></i>
+                                </div>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Echter Ökostrom stammt zu 100% aus erneuerbaren Energiequellen wie Wind, Sonne oder Wasserkraft. Wichtig ist jedoch nicht nur die Herkunft, sondern auch die Förderung des Ausbaus erneuerbarer Energien. Seriöse Anbieter investieren einen Teil ihrer Einnahmen in neue Ökostromanlagen. Achten Sie auf Zertifizierungen wie das "Grüner Strom Label" oder "ok-power", die strenge Kriterien für echten Ökostrom garantieren.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <h3>Muss ich bei einem Stromanbieterwechsel mit Versorgungsunterbrechungen rechnen?</h3>
+                                <div class="faq-icon">
+                                    <i class="fas fa-plus"></i>
+                                    <i class="fas fa-minus"></i>
+                                </div>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Nein, bei einem Anbieterwechsel gibt es keine Versorgungsunterbrechung. Die Stromversorgung wird vom örtlichen Netzbetreiber sichergestellt, der durch den Wechsel nicht betroffen ist. Es ändert sich lediglich der Vertragspartner, der Ihnen den Strom in Rechnung stellt. Der Wechselprozess läuft im Hintergrund ab und Sie müssen sich um nichts kümmern – wir übernehmen alle notwendigen Schritte für Sie.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="faq-tab-content" id="tab-gas">
+                    <div class="category-icon">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <h3 class="category-title">Wichtiges zu Ihren Gastarifen</h3>
+                    
+                    <div class="faq-accordion">
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <h3>Welche Laufzeiten sind bei Gasverträgen üblich?</h3>
+                                <div class="faq-icon">
+                                    <i class="fas fa-plus"></i>
+                                    <i class="fas fa-minus"></i>
+                                </div>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Die gängigsten Laufzeiten bei Gasverträgen sind 12 und 24 Monate. Längere Vertragslaufzeiten bieten oft Preisgarantien, während kürzere Laufzeiten mehr Flexibilität ermöglichen. Wir empfehlen in der aktuellen Marktsituation, die Vor- und Nachteile verschiedener Laufzeiten individuell abzuwägen. Gerne beraten wir Sie zu den aktuell optimalen Vertragskonditionen unter Berücksichtigung Ihrer persönlichen Präferenzen.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <h3>Gibt es auch klimaneutrales Gas?</h3>
+                                <div class="faq-icon">
+                                    <i class="fas fa-plus"></i>
+                                    <i class="fas fa-minus"></i>
+                                </div>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Ja, es gibt Angebote für klimaneutrales oder CO2-kompensiertes Erdgas. Hierbei werden die durch die Gasnutzung entstehenden CO2-Emissionen durch Investitionen in Klimaschutzprojekte ausgeglichen. Einige Anbieter bieten auch Biogasanteile im Tarif an. Diese Tarife sind ein Schritt in Richtung Klimaschutz, obwohl sie nicht zu 100% klimaneutral sind wie echte Ökostromtarife. Wir beraten Sie gerne zu den verfügbaren Optionen.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <h3>Wie berechne ich meinen Jahresverbrauch an Gas?</h3>
+                                <div class="faq-icon">
+                                    <i class="fas fa-plus"></i>
+                                    <i class="fas fa-minus"></i>
+                                </div>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Am einfachsten finden Sie Ihren Jahresverbrauch auf Ihrer letzten Gasabrechnung. Falls diese nicht verfügbar ist, können Sie Ihren Verbrauch auch schätzen: Für eine durchschnittliche Wohnung mit 80 m² liegt der Verbrauch bei etwa 10.000 kWh pro Jahr, für ein Einfamilienhaus mit 120 m² bei etwa 20.000 kWh. Diese Werte können je nach Dämmung, Heizverhalten und Anzahl der Bewohner stark variieren. Für eine genaue Beratung helfen wir Ihnen gerne bei der Ermittlung Ihres individuellen Verbrauchs.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="faq-tab-content" id="tab-beratung">
+                    <div class="category-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3 class="category-title">Unser Beratungsprozess im Detail</h3>
+                    
+                    <div class="faq-accordion">
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <h3>Wie läuft eine Beratung bei TarifWechsler ab?</h3>
+                                <div class="faq-icon">
+                                    <i class="fas fa-plus"></i>
+                                    <i class="fas fa-minus"></i>
+                                </div>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Unsere Beratung gliedert sich in drei einfache Schritte: Zunächst nehmen Sie Kontakt mit uns auf, entweder über das Formular auf unserer Website, per E-Mail oder telefonisch. Im zweiten Schritt führen wir ein Beratungsgespräch – je nach Ihren Wünschen per WhatsApp oder Videochat. Dabei analysieren wir Ihre aktuelle Situation und Ihre Bedürfnisse. Anschließend stellen wir Ihnen passende Angebote vor und unterstützen Sie auf Wunsch beim kompletten Wechselprozess.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <h3>Welche Unterlagen benötige ich für die Beratung?</h3>
+                                <div class="faq-icon">
+                                    <i class="fas fa-plus"></i>
+                                    <i class="fas fa-minus"></i>
+                                </div>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Für eine optimale Beratung ist es hilfreich, wenn Sie Ihre letzte Energieabrechnung bereithalten. Daraus können wir Ihren Verbrauch, Ihre Zählernummer und Ihren aktuellen Tarif entnehmen. Falls Sie diese nicht zur Hand haben, können wir die Beratung auch auf Basis Ihrer Wohnungsgröße und Personenanzahl durchführen und den Verbrauch schätzen. Für den eigentlichen Wechsel benötigen wir später Ihre Adresse, Bankverbindung und Zählernummer.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <h3>Übernehmen Sie auch die Kündigung bei meinem alten Anbieter?</h3>
+                                <div class="faq-icon">
+                                    <i class="fas fa-plus"></i>
+                                    <i class="fas fa-minus"></i>
+                                </div>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Ja, auf Wunsch übernehmen wir die komplette Abwicklung des Wechsels inklusive der Kündigung bei Ihrem bisherigen Anbieter. In den meisten Fällen erledigt sogar der neue Anbieter die Kündigung direkt. Sie müssen sich um nichts kümmern – wir sorgen dafür, dass der Wechsel reibungslos und zum optimalen Zeitpunkt erfolgt, sodass keine doppelten Zahlungen oder Versorgungslücken entstehen.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <h3>Wie lange dauert ein Wechsel des Energieanbieters?</h3>
+                                <div class="faq-icon">
+                                    <i class="fas fa-plus"></i>
+                                    <i class="fas fa-minus"></i>
+                                </div>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Ein Anbieterwechsel dauert in der Regel 4-6 Wochen. Dies hängt von verschiedenen Faktoren ab, wie der Kündigungsfrist Ihres aktuellen Vertrags und den Bearbeitungszeiten der beteiligten Anbieter. Bei Neueinzug kann ein Lieferantenwechsel auch schneller erfolgen. Wir achten bei der Terminierung darauf, dass keine Versorgungslücke entsteht und Sie nicht doppelt zahlen müssen.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-top">
+            <div class="container">
+                <div class="footer-grid">
+                    <div class="footer-info">
+                        <h3>TarifWechsler</h3>
+                        <p>Ihr Partner für transparente und individuelle Energieberatung. Wir helfen Ihnen, den optimalen Tarif für Ihre Bedürfnisse zu finden.</p>
+                        <div class="social-icons">
+                            <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                    <div class="footer-links">
+                        <h3>Schnellzugriff</h3>
+                        <ul>
+                            <li><a href="index.html">Startseite</a></li>
+                            <li><a href="ratgeber.html">Tipps & Rechner</a></li>
+                            <li><a href="kontakt.html">Kontakt</a></li>
+                            <li><a href="ueber-uns.html">Über uns</a></li>
+                            <li><a href="faq.html">FAQs</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-links">
+                        <h3>Service</h3>
+                        <ul>
+                            <li><a href="#">STROM-Tarifberatung</a></li>
+                            <li><a href="#">GAS-Tarifberatung</a></li>
+                            <li><a href="#">Ökostrom-Angebote</a></li>
+                            <li><a href="#">FAQ</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-contact">
+                        <h3>Kontakt</h3>
+                        <p><i class="fas fa-envelope"></i> info@tarifwechsler.de</p>
+                        <p><i class="fas fa-phone"></i> +49 123 456 789</p>
+                        <p><i class="fas fa-map-marker-alt"></i> Energiestraße 1, 10115 Berlin</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <p>&copy; 2023 TarifWechsler. Alle Rechte vorbehalten.</p>
+                <div class="footer-legal">
+                    <a href="#">Impressum</a>
+                    <a href="#">Datenschutz</a>
+                    <a href="#">AGB</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        document.querySelector('.mobile-menu-toggle').addEventListener('click', function() {
+            document.querySelector('nav ul').classList.toggle('show');
+        });
+        
+        // FAQ Tabs
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabButtons = document.querySelectorAll('.faq-tab-btn');
+            const tabContents = document.querySelectorAll('.faq-tab-content');
+            
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Remove active class from all buttons and contents
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    button.classList.add('active');
+                    
+                    // Show the corresponding content
+                    const targetId = button.getAttribute('data-target');
+                    document.getElementById(targetId).classList.add('active');
+                });
+            });
+            
+            // FAQ Accordion
+            const faqItems = document.querySelectorAll('.faq-item');
+            
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                
+                question.addEventListener('click', () => {
+                    item.classList.toggle('active');
+                });
+            });
+            
+            // Search functionality
+            const searchInput = document.getElementById('faq-search-input');
+            
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                const allFaqItems = document.querySelectorAll('.faq-item');
+                
+                // If search is empty, reset view
+                if (!searchTerm) {
+                    allFaqItems.forEach(item => {
+                        item.style.display = 'block';
+                        item.classList.remove('active');
+                    });
+                    return;
+                }
+                
+                // Filter FAQ items
+                allFaqItems.forEach(item => {
+                    const question = item.querySelector('.faq-question h3').textContent.toLowerCase();
+                    const answer = item.querySelector('.faq-answer p').textContent.toLowerCase();
+                    
+                    if (question.includes(searchTerm) || answer.includes(searchTerm)) {
+                        item.style.display = 'block';
+                        item.classList.add('active'); // Open matching items
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+                
+                // Show appropriate tabs
+                tabContents.forEach(content => {
+                    const visibleItems = content.querySelectorAll('.faq-item[style="display: block"]');
+                    if (visibleItems.length > 0) {
+                        content.classList.add('active');
+                    } else {
+                        content.classList.remove('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html> 

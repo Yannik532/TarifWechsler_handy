@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#2E4374">
+    <meta name="format-detection" content="telephone=no">
+    <title>Kontakt | TarifWechsler</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script>
+        // Prüfen, ob das Gerät ein Mobilgerät ist
+        function isMobile() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+
+        // Desktop-Ansicht aktivieren/deaktivieren
+        function toggleDesktopView() {
+            const html = document.documentElement;
+            if (html.classList.contains('desktop-view')) {
+                html.classList.remove('desktop-view');
+                localStorage.setItem('desktopView', 'false');
+                document.getElementById('viewToggle').textContent = 'Desktop-Ansicht';
+            } else {
+                html.classList.add('desktop-view');
+                localStorage.setItem('desktopView', 'true');
+                document.getElementById('viewToggle').textContent = 'Mobile-Ansicht';
+            }
+        }
+
+        // Gespeicherte Einstellung beim Laden anwenden
+        document.addEventListener('DOMContentLoaded', function() {
+            if (isMobile()) {
+                // View-Toggle-Button nur auf Mobilgeräten anzeigen
+                const viewToggleBtn = document.createElement('button');
+                viewToggleBtn.id = 'viewToggle';
+                viewToggleBtn.className = 'view-toggle-btn';
+                viewToggleBtn.textContent = 'Desktop-Ansicht';
+                viewToggleBtn.addEventListener('click', toggleDesktopView);
+                document.body.appendChild(viewToggleBtn);
+                
+                // Gespeicherte Einstellung anwenden
+                const savedView = localStorage.getItem('desktopView');
+                if (savedView === 'true') {
+                    document.documentElement.classList.add('desktop-view');
+                    viewToggleBtn.textContent = 'Mobile-Ansicht';
+                }
+            }
+        });
+    </script>
+    <style>
+        /* Grundlegende Farbverlauf-Anpassung - wie auf Index und Ratgeber */
+        body {
+            background: linear-gradient(to bottom, #2E4374 0%, #243156 30%, #1A2C54 60%, #141d37 85%, #121824 100%);
+            background-attachment: fixed;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        
+        /* Entfernen aller Margins zwischen Sektionen */
+        section {
+            margin: 0 !important;
+            padding: 2.5rem 0; /* Reduziertes Padding für kompaktere Darstellung */
+            background: transparent !important;
+            background-image: none !important;
+            position: relative;
+            border: none !important;
+        }
+        
+        section::before, section::after {
+            display: none !important;
+        }
+        
+        header {
+            background-color: rgba(80, 80, 80, 0.5); /* Grauer transparenter Hintergrund */
+            backdrop-filter: blur(5px); /* Glaseffekt */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Verstärkter Schatten */
+            z-index: 1000;
+        }
+        
+        /* 3D-Effekt und Schatten für das TarifWechsler-Logo */
+        header .logo h1 {
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5), 
+                         0 4px 8px rgba(0, 0, 0, 0.3),
+                         0 0 5px rgba(255, 255, 255, 0.4);
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            transform: perspective(500px) rotateX(5deg);
+            display: inline-block;
+            transition: all 0.3s ease;
+            color: #66a5ff; /* Helles Blau für "Tarif" */
+        }
+        
+        header .logo h1:hover {
+            transform: perspective(500px) rotateX(0deg) scale(1.05);
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.6), 
+                         0 6px 12px rgba(0, 0, 0, 0.4),
+                         0 0 8px rgba(255, 255, 255, 0.5);
+        }
+        
+        header .logo span {
+            color: #ffffff; /* "Wechsler" in Weiß */
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            -webkit-background-clip: unset;
+            -webkit-text-fill-color: unset;
+            background: none;
+        }
+        
+        nav ul {
+            display: flex;
+            gap: 20px;
+        }
+        
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 8px 15px;
+            border-radius: 8px;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            background: rgba(255, 255, 255, 0.05);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            border-bottom: none; /* Explizit keinen unteren Rand setzen */
+        }
+        
+        nav ul li a:hover, nav ul li a.active {
+            color: #ffffff;
+            background: rgba(66, 133, 244, 0.7);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+            transform: translateY(-3px) rotateX(5deg);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            border-bottom: none; /* Explizit keinen unteren Rand setzen */
+        }
+        
+        /* ::after Pseudoelement entfernen */
+        nav ul li a::after, 
+        nav ul li a:hover::after,
+        nav ul li a.active::after {
+            display: none !important;
+            content: none !important;
+        }
+        
+        @keyframes navPulse {
+            0% { box-shadow: 0 0 0 0 rgba(66, 133, 244, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(66, 133, 244, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(66, 133, 244, 0); }
+        }
+        
+        nav ul li a.active {
+            animation: navPulse 2s infinite;
+        }
+        
+        /* Hintergrund-Kreuze */
+        .background-crosses {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        .cross {
+            position: absolute;
+            animation: float-crosses 15s infinite ease-in-out;
+        }
+        
+        .cross::before, .cross::after {
+            content: '';
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        
+        .cross::before {
+            width: 100%;
+            height: 15%;
+            top: 42.5%;
+            left: 0;
+            transform: rotate(45deg);
+        }
+        
+        .cross::after {
+            width: 15%;
+            height: 100%;
+            top: 0;
+            left: 42.5%;
+            transform: rotate(45deg);
+        }
+        
+        @keyframes float-crosses {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(10px, 15px) rotate(5deg); }
+            100% { transform: translate(0, 0) rotate(0deg); }
+        }
+        
+        .cross:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 5%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+        
+        .cross:nth-child(2) {
+            width: 60px;
+            height: 60px;
+            top: 25%;
+            right: 5%;
+            animation-delay: 2s;
+        }
+        
+        .cross:nth-child(3) {
+            width: 50px;
+            height: 50px;
+            bottom: 10%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+        
+        .cross:nth-child(4) {
+            width: 40px;
+            height: 40px;
+            top: 40%;
+            left: 30%;
+            animation-delay: 6s;
+        }
+        
+        .cross:nth-child(5) {
+            width: 55px;
+            height: 55px;
+            bottom: 30%;
+            right: 15%;
+            animation-delay: 8s;
+        }
+        
+        .cross:nth-child(6) {
+            width: 70px;
+            height: 70px;
+            top: 60%;
+            right: 25%;
+            animation-delay: 10s;
+        }
+        
+        .cross:nth-child(7) {
+            width: 65px;
+            height: 65px;
+            top: 75%;
+            left: 5%;
+            animation-delay: 12s;
+        }
+        
+        .cross:nth-child(8) {
+            width: 45px;
+            height: 45px;
+            top: 15%;
+            left: 50%;
+            animation-delay: 14s;
+        }
+        
+        .footer-bottom {
+            background-color: rgba(0,0,0,0.3);
+            margin-top: 0;
+            border-top: none;
+        }
+        
+        .footer-top {
+            background-color: rgba(0,0,0,0.1);
+            margin-bottom: 0;
+            border-bottom: none;
+        }
+        
+        /* Entfernen aller Hintergründe bei Sektionen */
+        .hero, .features, .how-it-works, .testimonials, section, .subpage-hero {
+            background: transparent !important;
+            background-image: none !important;
+            position: relative;
+            z-index: 1;
+            border: none !important;
+        }
+        
+        .subpage-hero::after, .subpage-hero::before, .subpage-hero .container::before {
+            display: none !important;
+        }
+        
+        /* Komplett entfernen aller Elemente, die Trennlinien verursachen könnten */
+        .hero-wave, .wave-divider, .cta-wave-top, .cta-wave-bottom, .process-line {
+            display: none !important;
+        }
+        
+        /* Kontakt-spezifische Anpassungen */
+        .contact-form-section {
+            background-color: transparent;
+        }
+        
+        .form-container {
+            background-color: rgba(230, 230, 230, 0.85);
+            backdrop-filter: blur(2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            color: #333;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        
+        .contact-image-container .contact-info-box {
+            background-color: rgba(230, 230, 230, 0.85);
+            backdrop-filter: blur(2px);
+            color: #333;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        
+        .form-message, .success-message, .error-message {
+            background-color: rgba(230, 230, 230, 0.85);
+            backdrop-filter: blur(2px);
+            color: #333;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        
+        .form-message {
+            margin-top: 15px;
+            padding: 10px;
+            text-align: center;
+            border-radius: 5px;
+        }
+        
+        .success-message {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: rgba(212, 237, 218, 0.85);
+            backdrop-filter: blur(2px);
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            border-radius: 5px;
+        }
+        
+        .error-message {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: rgba(248, 215, 218, 0.85);
+            backdrop-filter: blur(2px);
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            border-radius: 5px;
+        }
+        
+        .contact-options {
+            background-color: rgba(230, 230, 230, 0.85);
+            backdrop-filter: blur(2px);
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        
+        .contact-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .contact-buttons .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 20px;
+            font-weight: 600;
+        }
+        
+        .contact-buttons .btn i {
+            margin-right: 8px;
+            font-size: 18px;
+        }
+        
+        /* Anpassung der Buttons */
+        .btn-primary {
+            background-color: #1A2C54;
+            color: white;
+            text-decoration: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-primary:hover {
+            background-color: #243670;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+        }
+        
+        .btn-secondary {
+            background-color: rgba(80, 80, 80, 0.4);
+            backdrop-filter: blur(5px);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-secondary:hover {
+            background-color: rgba(90, 98, 104, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+        }
+        
+        .contact-note {
+            font-style: italic;
+            margin-top: 15px;
+        }
+        
+        #show-form-btn {
+            font-weight: bold;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        
+        /* Info-Box-Anpassungen */
+        .info-box-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            margin-top: -50px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .info-box {
+            flex: 1;
+            min-width: 250px;
+            background-color: rgba(230, 230, 230, 0.85);
+            backdrop-filter: blur(2px);
+            border-radius: 10px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        
+        .info-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            background-color: rgba(240, 240, 240, 0.9);
+        }
+        
+        .info-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #1A2C54 0%, #243670 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 28px;
+            box-shadow: 0 5px 15px rgba(26, 44, 84, 0.3);
+        }
+        
+        .info-box h3 {
+            color: #1A2C54;
+            margin-bottom: 15px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .info-box p {
+            color: #333;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+        
+        /* Stil für Desktop/Mobile-Ansicht Umschalter */
+        .view-toggle-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: rgba(46, 67, 116, 0.9);
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            padding: 10px 15px;
+            font-size: 14px;
+            font-weight: 600;
+            z-index: 9999;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .view-toggle-btn:hover {
+            background-color: rgba(26, 44, 84, 0.95);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+        }
+        
+        /* Verstecken des Umschalters beim Drucken */
+        @media print {
+            .view-toggle-btn {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hintergrund-Kreuze -->
+    <div class="background-crosses">
+        <div class="cross"></div>
+        <div class="cross"></div>
+        <div class="cross"></div>
+        <div class="cross"></div>
+        <div class="cross"></div>
+        <div class="cross"></div>
+        <div class="cross"></div>
+        <div class="cross"></div>
+    </div>
+    
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>Tarif<span>Wechsler</span></h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Startseite</a></li>
+                    <li><a href="ratgeber.html">Tipps & Rechner</a></li>
+                    <li><a href="kontakt.html" class="active">Kontakt</a></li>
+                    <li><a href="ueber-uns.html">Über uns</a></li>
+                    <li><a href="faq.html">FAQs</a></li>
+                </ul>
+            </nav>
+            <div class="mobile-menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <section class="subpage-hero">
+        <div class="hero-content">
+            <div class="container">
+                <div class="hero-text centered">
+                    <h2>Persönliche Beratung für Ihre Energiefragen</h2>
+                    <p>Vereinbaren Sie einen individuellen Beratungstermin mit unserem Experten</p>
+                </div>
+            </div>
+        </div>
+        <div class="hero-wave">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+                <path fill="#ffffff" fill-opacity="1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,149.3C960,160,1056,160,1152,138.7C1248,117,1344,75,1392,53.3L1440,32L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+            </svg>
+        </div>
+    </section>
+
+    <section class="contact-info-boxes">
+        <div class="container">
+            <div class="info-box-grid">
+                <div class="info-box">
+                    <div class="info-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3>Beratung via WhatsApp</h3>
+                    <p>Flexible Beratung per WhatsApp-Chat – schnell, unkompliziert und zeitlich flexibel.</p>
+                </div>
+                <div class="info-box">
+                    <div class="info-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <h3>Videochat-Beratung</h3>
+                    <p>Persönliches Gespräch per Videochat – so als wären wir direkt bei Ihnen.</p>
+                </div>
+                <div class="info-box">
+                    <div class="info-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Datenschutz garantiert</h3>
+                    <p>Ihre Daten werden vertraulich behandelt und nur für Ihre Beratung verwendet.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact-form-section">
+        <div class="container">
+            <div class="contact-wrapper">
+                <div class="form-container">
+                    <div class="form-header">
+                        <h2>Kontaktformular</h2>
+                        <p>Füllen Sie das Formular aus, und wir melden uns umgehend bei Ihnen.</p>
+                    </div>
+                    <form id="contact-form" action="https://api.web3forms.com/submit" method="POST">
+                        <!-- Web3Forms API Key -->
+                        <input type="hidden" name="access_key" value="262a1f9b-bd19-47fa-aef7-c2418685305b">
+                        
+                        <!-- Ziel-E-Mail-Adresse für Benachrichtigungen -->
+                        <input type="hidden" name="redirect" value="formular-danke.html">
+                        <input type="hidden" name="subject" value="Neue Anfrage von TarifWechsler.de">
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="name">Name*</label>
+                                <input type="text" id="name" name="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">E-Mail*</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="phone">Telefon</label>
+                                <input type="tel" id="phone" name="phone">
+                            </div>
+                            <div class="form-group">
+                                <label for="contact-method">Bevorzugte Kontaktart</label>
+                                <select id="contact-method" name="contact-method">
+                                    <option value="whatsapp">WhatsApp</option>
+                                    <option value="videochat">Videochat</option>
+                                    <option value="email">E-Mail</option>
+                                    <option value="phone">Telefon</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Ihre Nachricht</label>
+                            <textarea id="message" name="message" rows="5"></textarea>
+                        </div>
+                        <div class="form-group checkbox">
+                            <input type="checkbox" id="privacy" name="privacy" required>
+                            <label for="privacy">Ich stimme zu, dass meine Daten zur Bearbeitung meiner Anfrage gespeichert und verwendet werden. Weitere Informationen finden Sie in unserer <a href="#">Datenschutzerklärung</a>.*</label>
+                        </div>
+                        
+                        <!-- Honeypot-Feld für Spam-Schutz -->
+                        <input type="checkbox" name="botcheck" style="display: none;">
+                        
+                        <button type="submit" class="btn btn-primary btn-full">Anfrage absenden</button>
+                    </form>
+                </div>
+                <div class="contact-image-container">
+                    <img src="images/Kontakt.jpeg" alt="Persönliche Beratung">
+                    <div class="contact-info-box">
+                        <h3>Unsere Beratungszeiten</h3>
+                        <ul class="contact-time-list">
+                            <li><i class="fas fa-clock"></i> Mo - Fr: 9:00 - 18:00 Uhr</li>
+                            <li><i class="fas fa-clock"></i> Sa: 10:00 - 14:00 Uhr</li>
+                            <li><i class="fas fa-envelope"></i> info@tarifwechsler.de</li>
+                            <li><i class="fas fa-phone"></i> +49 123 456 789</li>
+                        </ul>
+                        <div class="contact-note">
+                            Außerhalb unserer Geschäftszeiten erreichen Sie uns per E-Mail.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-top">
+            <div class="container">
+                <div class="footer-grid">
+                    <div class="footer-info">
+                        <h3>TarifWechsler</h3>
+                        <p>Ihr Partner für transparente und individuelle Energieberatung. Wir helfen Ihnen, den optimalen Tarif für Ihre Bedürfnisse zu finden.</p>
+                        <div class="social-icons">
+                            <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                    <div class="footer-links">
+                        <h3>Schnellzugriff</h3>
+                        <ul>
+                            <li><a href="index.html">Startseite</a></li>
+                            <li><a href="ratgeber.html">Tipps & Rechner</a></li>
+                            <li><a href="kontakt.html">Kontakt</a></li>
+                            <li><a href="ueber-uns.html">Über uns</a></li>
+                            <li><a href="faq.html">FAQs</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-links">
+                        <h3>Service</h3>
+                        <ul>
+                            <li><a href="#">Stromtarifberatung</a></li>
+                            <li><a href="#">Gastarifberatung</a></li>
+                            <li><a href="#">Ökostrom-Angebote</a></li>
+                            <li><a href="#">FAQ</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-contact">
+                        <h3>Kontakt</h3>
+                        <p><i class="fas fa-envelope"></i> info@tarifwechsler.de</p>
+                        <p><i class="fas fa-phone"></i> +49 123 456 789</p>
+                        <p><i class="fas fa-map-marker-alt"></i> Energiestraße 1, 10115 Berlin</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <p>&copy; 2023 TarifWechsler. Alle Rechte vorbehalten.</p>
+                <div class="footer-legal">
+                    <a href="#">Impressum</a>
+                    <a href="#">Datenschutz</a>
+                    <a href="#">AGB</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        document.querySelector('.mobile-menu-toggle').addEventListener('click', function() {
+            document.querySelector('nav ul').classList.toggle('show');
+        });
+        
+        // Einfaches Formular-Feedback
+        const form = document.getElementById('contact-form');
+        const formMessages = document.createElement('div');
+        formMessages.classList.add('form-message');
+        form.after(formMessages);
+        
+        form.addEventListener('submit', function(event) {
+            // Zeige Ladestatus, falls die Übermittlung länger dauert
+            formMessages.innerHTML = '<p>Ihre Anfrage wird gesendet...</p>';
+            formMessages.style.display = 'block';
+        });
+    </script>
+</body>
+</html> 

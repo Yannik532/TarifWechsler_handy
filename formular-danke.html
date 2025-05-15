@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no">
+    <title>Vielen Dank | TarifWechsler</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script>
+        // Prüfen, ob das Gerät ein Mobilgerät ist
+        function isMobile() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+
+        // Desktop-Ansicht aktivieren/deaktivieren
+        function toggleDesktopView() {
+            const html = document.documentElement;
+            if (html.classList.contains('desktop-view')) {
+                html.classList.remove('desktop-view');
+                localStorage.setItem('desktopView', 'false');
+                document.getElementById('viewToggle').textContent = 'Desktop-Ansicht';
+            } else {
+                html.classList.add('desktop-view');
+                localStorage.setItem('desktopView', 'true');
+                document.getElementById('viewToggle').textContent = 'Mobile-Ansicht';
+            }
+        }
+
+        // Gespeicherte Einstellung beim Laden anwenden
+        document.addEventListener('DOMContentLoaded', function() {
+            if (isMobile()) {
+                // View-Toggle-Button nur auf Mobilgeräten anzeigen
+                const viewToggleBtn = document.createElement('button');
+                viewToggleBtn.id = 'viewToggle';
+                viewToggleBtn.className = 'view-toggle-btn';
+                viewToggleBtn.textContent = 'Desktop-Ansicht';
+                viewToggleBtn.addEventListener('click', toggleDesktopView);
+                document.body.appendChild(viewToggleBtn);
+                
+                // Gespeicherte Einstellung anwenden
+                const savedView = localStorage.getItem('desktopView');
+                if (savedView === 'true') {
+                    document.documentElement.classList.add('desktop-view');
+                    viewToggleBtn.textContent = 'Mobile-Ansicht';
+                }
+            }
+        });
+    </script>
+    <style>
+        /* Grundlegende Farbverlauf-Anpassung - exakt wie auf Index-Seite */
+        body {
+            background: linear-gradient(135deg, #2c3e50 0%, #1a2533 100%) !important;
+            color: #fff;
+        }
+        
+        header {
+            background-color: transparent;
+        }
+        
+        header .logo h1, header .logo span {
+            color: #fff;
+        }
+        
+        nav ul {
+            display: flex;
+            gap: 20px;
+        }
+        
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 8px 15px;
+            border-radius: 8px;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            background: rgba(255, 255, 255, 0.05);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            border-bottom: none;
+        }
+        
+        nav ul li a:hover, nav ul li a.active {
+            color: #ffffff;
+            background: rgba(66, 133, 244, 0.7);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+            transform: translateY(-3px) rotateX(5deg);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            border-bottom: none;
+        }
+        
+        /* ::after Pseudoelement entfernen */
+        nav ul li a::after, 
+        nav ul li a:hover::after,
+        nav ul li a.active::after {
+            display: none !important;
+            content: none !important;
+        }
+        
+        @keyframes navPulse {
+            0% { box-shadow: 0 0 0 0 rgba(66, 133, 244, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(66, 133, 244, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(66, 133, 244, 0); }
+        }
+        
+        nav ul li a.active {
+            animation: navPulse 2s infinite;
+        }
+        
+        .footer-bottom {
+            background-color: rgba(0,0,0,0.3);
+        }
+        
+        .footer-top {
+            background-color: rgba(0,0,0,0.1);
+        }
+        
+        /* Dankeseite-spezifische Stile - angepasst an Index-Farben */
+        .thank-you-container {
+            text-align: center;
+            padding: 80px 20px;
+            max-width: 800px;
+            margin: 80px auto;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            color: #333;
+        }
+        
+        .thank-you-icon {
+            font-size: 60px;
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+        
+        .thank-you-title {
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .thank-you-message {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        
+        .back-button {
+            display: inline-block;
+            background-color: #0056b3;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .back-button:hover {
+            background-color: #004494;
+        }
+        
+        /* Stil für Desktop/Mobile-Ansicht Umschalter */
+        .view-toggle-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: rgba(46, 67, 116, 0.9);
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            padding: 10px 15px;
+            font-size: 14px;
+            font-weight: 600;
+            z-index: 9999;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .view-toggle-btn:hover {
+            background-color: rgba(26, 44, 84, 0.95);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+        }
+        
+        /* Verstecken des Umschalters beim Drucken */
+        @media print {
+            .view-toggle-btn {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>Tarif<span>Wechsler</span></h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Startseite</a></li>
+                    <li><a href="ratgeber.html">Tipps & Rechner</a></li>
+                    <li><a href="kontakt.html">Kontakt</a></li>
+                    <li><a href="ueber-uns.html">Über uns</a></li>
+                    <li><a href="faq.html">FAQs</a></li>
+                </ul>
+            </nav>
+            <div class="mobile-menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <section class="thank-you-container">
+        <div class="thank-you-icon">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        <h1 class="thank-you-title">Vielen Dank für Ihre Anfrage!</h1>
+        <p class="thank-you-message">
+            Wir haben Ihre Nachricht erhalten und werden uns so schnell wie möglich bei Ihnen melden.
+            In der Regel antworten wir innerhalb von 24 Stunden an Werktagen.
+        </p>
+        <a href="index.html" class="back-button">Zurück zur Startseite</a>
+    </section>
+
+    <footer>
+        <div class="footer-top">
+            <div class="container">
+                <div class="footer-grid">
+                    <div class="footer-info">
+                        <h3>TarifWechsler</h3>
+                        <p>Ihr Partner für transparente und individuelle Energieberatung. Wir helfen Ihnen, den optimalen Tarif für Ihre Bedürfnisse zu finden.</p>
+                        <div class="social-icons">
+                            <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                    <div class="footer-links">
+                        <h3>Schnellzugriff</h3>
+                        <ul>
+                            <li><a href="index.html">Startseite</a></li>
+                            <li><a href="ratgeber.html">Tipps & Rechner</a></li>
+                            <li><a href="kontakt.html">Kontakt</a></li>
+                            <li><a href="ueber-uns.html">Über uns</a></li>
+                            <li><a href="faq.html">FAQs</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-links">
+                        <h3>Service</h3>
+                        <ul>
+                            <li><a href="#">Stromtarifberatung</a></li>
+                            <li><a href="#">Gastarifberatung</a></li>
+                            <li><a href="#">Ökostrom-Angebote</a></li>
+                            <li><a href="#">FAQ</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-contact">
+                        <h3>Kontakt</h3>
+                        <p><i class="fas fa-envelope"></i> info@tarifwechsler.de</p>
+                        <p><i class="fas fa-phone"></i> +49 123 456 789</p>
+                        <p><i class="fas fa-map-marker-alt"></i> Energiestraße 1, 10115 Berlin</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <p>&copy; 2023 TarifWechsler. Alle Rechte vorbehalten.</p>
+                <div class="footer-legal">
+                    <a href="#">Impressum</a>
+                    <a href="#">Datenschutz</a>
+                    <a href="#">AGB</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        document.querySelector('.mobile-menu-toggle').addEventListener('click', function() {
+            document.querySelector('nav ul').classList.toggle('show');
+        });
+    </script>
+</body>
+</html> 
