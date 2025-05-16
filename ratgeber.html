@@ -251,70 +251,195 @@
         }
         
         .tab-panel {
-            padding: 1.5rem !important;
+            display: none;
+            animation: fadeIn 0.5s ease;
         }
         
-        .reasons-grid, .compare-steps, .tips-grid {
-            gap: 1rem !important;
-            margin-top: 1.5rem !important;
+        .tab-panel.active {
+            display: block;
         }
         
-        .calculator-section {
-            padding-top: 2rem !important;
-            padding-bottom: 2rem !important;
-        }
-        
-        .section-header {
-            margin-bottom: 1.5rem !important;
-        }
-        
-        /* Kompaktere Abstände zwischen Elementen */
-        p {
-            margin-bottom: 0.8rem !important;
-        }
-        
-        h2, h3, h4 {
-            margin-bottom: 0.8rem !important;
-        }
-        
-        /* Zusätzlicher Stil für die Hauptüberschrift */
-        .hero-text.centered h2 {
-            margin-top: 1rem; /* Reduzierter Abstand nach oben */
-        }
-        
-        /* Anpassung für die CTA-Sektion */
-        .cta-content-wrapper {
-            background-color: rgba(80, 80, 80, 0.4);
-            backdrop-filter: blur(5px);
-            border-radius: 15px;
-            padding: 2rem;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
-        }
-        
-        /* Stil für die normale Überschrift */
-        .cta-text h2 {
-            color: white;
-            margin-bottom: 1.5rem;
-            font-size: 2.2rem;
-            font-weight: 700;
-        }
-        
-        /* Tabs-Container mit transparentem Hintergrund */
-        .tabs-container {
-            background-color: rgba(80, 80, 80, 0.4);
-            backdrop-filter: blur(5px);
-            border-radius: var(--radius);
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
-            overflow: hidden;
-        }
-        
-        /* Tabs-Navigation mit transparentem Grau */
-        .tabs-nav {
+        .tab-header {
             display: flex;
-            background-color: rgba(80, 80, 80, 0.5);
-            padding: 0.5rem;
-            border-radius: var(--radius) var(--radius) 0 0;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            align-items: center;
+            margin-bottom: 2rem;
+            gap: 1rem;
+        }
+        
+        .tab-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #1A2C54 0%, #3D77A5 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        .reasons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .reason-card {
+            background-color: rgba(230, 230, 230, 0.85);
+            backdrop-filter: blur(2px);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .reason-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+        
+        .reason-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #3D77A5 0%, #6699CC 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            color: white;
+            font-size: 1.3rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        .reason-card h3 {
+            color: #1A2C54;
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        
+        .reason-card p {
+            color: #333;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        .info-callout {
+            background-color: rgba(26, 44, 84, 0.9);
+            color: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-top: 2rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        
+        .callout-icon {
+            font-size: 2rem;
+            color: #FFD700;
+        }
+        
+        .callout-content h3 {
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        
+        .callout-content p {
+            margin-bottom: 0;
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        /* Mobile Anpassungen für Tabs */
+        @media (max-width: 768px) {
+            .tab-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .tab-icon {
+                margin-bottom: 0.5rem;
+            }
+            
+            .reason-card {
+                padding: 1.2rem;
+                text-align: center;
+            }
+            
+            .reason-icon {
+                margin: 0 auto 1rem;
+            }
+            
+            .info-callout {
+                flex-direction: column;
+                text-align: center;
+                padding: 1.2rem;
+            }
+            
+            .callout-icon {
+                margin-bottom: 0.5rem;
+            }
+            
+            /* Eco-info Bereich verbessern */
+            .eco-labels {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 0.8rem;
+                margin: 1rem 0;
+            }
+            
+            .eco-label {
+                padding: 0.8rem 1rem;
+                border-radius: 8px;
+                flex: 1 1 auto;
+                min-width: 150px;
+                text-align: center;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.5rem;
+            }
+            
+            /* Tipps-Karten verbessern */
+            .tips-grid {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .tip-card {
+                background-color: rgba(230, 230, 230, 0.85);
+                backdrop-filter: blur(2px);
+                border-radius: 12px;
+                padding: 1.2rem;
+                position: relative;
+                border: 1px solid rgba(255, 255, 255, 0.5);
+            }
+            
+            .tip-number {
+                position: absolute;
+                top: -10px;
+                left: -10px;
+                background: linear-gradient(135deg, #1A2C54 0%, #3D77A5 100%);
+                color: white;
+                width: 36px;
+                height: 36px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: bold;
+                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+                font-size: 0.9rem;
+            }
         }
         
         /* Der Inhalt der Tabs (panels) ist transparent */
@@ -374,73 +499,147 @@
         }
         
         /* Neue Stile für den transparenten Rechner-Bereich */
+        .calculator-section {
+            margin: 2rem 0;
+        }
+        
         .calculator-container {
-            background: transparent;
-            border-radius: var(--radius);
-            overflow: hidden;
-            box-shadow: none;
-            display: grid;
-            grid-template-columns: 3fr 2fr;
-            gap: 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            background-color: rgba(80, 80, 80, 0.4);
+            backdrop-filter: blur(5px);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .calculator-form, .calculator-result {
+            flex: 1;
+            min-width: 250px;
         }
         
         .calculator-form {
-            background-color: rgba(80, 80, 80, 0.4);
-            backdrop-filter: blur(5px);
-            padding: 2rem;
-            border-right: none;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
-            color: white;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .calculator-form .form-group {
+            margin-bottom: 1rem;
         }
         
         .calculator-form label {
-            color: white;
-            font-weight: 500;
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #fff;
+            font-weight: 600;
         }
         
         .calculator-form input, 
         .calculator-form select {
+            width: 100%;
+            padding: 0.8rem;
+            border-radius: 8px;
             background-color: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.2);
             color: white;
+            font-size: 1rem;
         }
         
         .calculator-form input::placeholder {
             color: rgba(255, 255, 255, 0.6);
         }
         
-        /* Button zum Berechnen des Einsparpotenzials */
-        #calculate-btn, .btn-secondary {
-            background-color: #1A2C54;
+        .calculator-result {
+            background-color: rgba(26, 44, 84, 0.9);
+            padding: 2rem;
+            border-radius: 12px;
             color: white;
-            border: none;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .result-header {
+            font-size: 1.2rem;
             font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            margin-bottom: 1rem;
         }
         
-        #calculate-btn:hover, .btn-secondary:hover {
-            background-color: #243670;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+        .result-amount {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #FFD700;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
         
-        /* Der Button "JETZT KOSTENLOS BERATEN LASSEN" */
-        .calculator-result .btn-secondary {
-            margin-top: 1rem;
+        .result-period {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            opacity: 0.8;
         }
         
-        /* Neuer Stil für das Sparen-Bild mit dunklerem Hintergrund */
-        .cta-image img.contact-cubes {
-            filter: brightness(0.75) saturate(0.85); /* Macht das Bild deutlich dunkler */
-            transition: filter 0.3s ease;
+        .result-note {
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.7;
+            max-width: 250px;
         }
         
-        .cta-image img.contact-cubes:hover {
-            filter: brightness(0.85) saturate(0.9); /* Beim Hover etwas heller */
+        /* Mobile Anpassungen für Rechner und CTA */
+        @media (max-width: 768px) {
+            .calculator-container {
+                flex-direction: column;
+                padding: 1.5rem;
+                gap: 1.5rem;
+            }
+            
+            .calculator-form {
+                order: 1; /* Form zuerst auf Mobile */
+            }
+            
+            .calculator-result {
+                order: 2;
+                padding: 1.5rem;
+            }
+            
+            .result-amount {
+                font-size: 2.5rem;
+            }
+            
+            .result-note {
+                margin-bottom: 1rem;
+            }
+            
+            /* CTA-Bereich für Mobil */
+            .cta-content-wrapper {
+                flex-direction: column;
+                padding: 1.5rem;
+                text-align: center;
+            }
+            
+            .cta-text {
+                margin-bottom: 1.5rem;
+            }
+            
+            .cta-text h2 {
+                font-size: 1.8rem;
+                margin-bottom: 1rem;
+            }
+            
+            .cta-image {
+                max-width: 100%;
+            }
+            
+            .cta-image img {
+                border-radius: 12px;
+                max-width: 100%;
+            }
         }
         
         /* Neuer Stil für den dunkelblauen Button mit weißer Schrift */
@@ -540,6 +739,217 @@
                 display: none;
             }
         }
+
+        /* Compare Steps verbessert */
+        .compare-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .compare-step {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 1.5rem;
+            align-items: start;
+        }
+
+        .step-marker {
+            width: 35px;
+            height: 35px;
+            background: var(--secondary-gradient);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            box-shadow: 0 3px 10px rgba(23, 133, 130, 0.2);
+        }
+
+        .compare-content {
+            background: rgba(230, 230, 230, 0.85);
+            backdrop-filter: blur(2px);
+            padding: 1.5rem;
+            border-radius: 12px; /* Abgerundete Ecken konsistent mit anderen Elementen */
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: transform 0.3s ease;
+        }
+
+        .compare-step:hover .compare-content {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .compare-content h3 {
+            color: #1A2C54;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+        }
+
+        .compare-content p {
+            color: #333;
+            line-height: 1.5;
+        }
+
+        /* Mobile Anpassungen für Compare-Steps */
+        @media (max-width: 768px) {
+            .compare-step {
+                grid-template-columns: 1fr; /* Eine Spalte für mobile Ansicht */
+                gap: 0.5rem;
+                position: relative;
+                padding-left: 40px; /* Platz für Marker */
+            }
+            
+            .step-marker {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 30px; /* Etwas kleiner für Mobil */
+                height: 30px;
+            }
+            
+            .compare-content {
+                padding: 15px; /* Weniger Padding für Mobil */
+                margin-bottom: 15px;
+            }
+            
+            .compare-content h3 {
+                font-size: 1.1rem; /* Kleinere Überschrift */
+            }
+            
+            .compare-content p {
+                font-size: 0.95rem; /* Kleinerer Text */
+            }
+        }
+
+        .tabs-nav {
+            display: flex;
+            gap: 5px; /* Geringerer Abstand zwischen Tabs */
+            margin-bottom: 1.5rem;
+            justify-content: center; /* Tabs zentrieren */
+            width: 100%;
+            padding: 0 10px; /* Seitenabstand */
+            flex-wrap: nowrap; /* Verhindert Umbrüche */
+            box-sizing: border-box;
+        }
+
+        .tab-btn {
+            background-color: #444444; /* Dunkelgrau */
+            color: #ffffff; /* Weiße Schrift für besseren Kontrast */
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 12px 8px; /* Kompaktere Buttons */
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.9rem; /* Kleinere Schrift */
+            white-space: nowrap; /* Verhindert Textumbruch */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 25%; /* Feste Breite für gleichmäßige Verteilung */
+            min-width: 0; /* Erlaubt Verkleinerung unter min-content */
+            flex: 1;
+        }
+
+        .tab-btn:hover {
+            background-color: #555555; /* Etwas helleres Grau beim Hover */
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .tab-btn.active {
+            background-color: #2E4374; /* Blau für den aktiven Tab */
+            color: white;
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 5px 15px rgba(46, 67, 116, 0.4);
+        }
+
+        /* Anpassungen für Mobile */
+        @media (max-width: 768px) {
+            .tabs-nav {
+                justify-content: space-between; /* Gleichmäßig verteilen */
+                gap: 3px; /* Noch geringerer Abstand auf mobilen Geräten */
+            }
+            
+            .tab-btn {
+                padding: 10px 5px; /* Noch kompakter auf mobilen Geräten */
+                font-size: 0.8rem; /* Kleinere Schrift auf mobilen Geräten */
+                width: 25%; /* Gleiche feste Breite */
+            }
+        }
+
+        /* CTA-Sektion anpassen für vertikales Layout */
+        .cta-content-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 1.5rem;
+            padding: 2rem;
+        }
+
+        .cta-text {
+            max-width: 800px;
+        }
+
+        .cta-text h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-text p {
+            font-size: 1.1rem;
+            margin-bottom: 0;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .cta-image {
+            max-width: 600px;
+            width: 100%;
+            margin: 1rem 0;
+        }
+
+        .cta-image img {
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-button {
+            margin-top: 1rem;
+        }
+
+        .cta-button .btn {
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Mobile Anpassungen */
+        @media (max-width: 768px) {
+            .cta-content-wrapper {
+                padding: 1.5rem;
+            }
+            
+            .cta-text h2 {
+                font-size: 1.7rem;
+            }
+            
+            .cta-text p {
+                font-size: 1rem;
+            }
+            
+            .cta-button .btn {
+                padding: 12px 25px;
+                font-size: 1rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -595,7 +1005,7 @@
         <div class="container">
             <div class="tabs-container">
                 <div class="tabs-nav">
-                    <button class="tab-btn active" data-target="tab-1">Stromanbieter­wechsel</button>
+                    <button class="tab-btn active" data-target="tab-1">Wechsel</button>
                     <button class="tab-btn" data-target="tab-2">Tarifvergleich</button>
                     <button class="tab-btn" data-target="tab-3">Ökostrom</button>
                     <button class="tab-btn" data-target="tab-4">Spartipps</button>
@@ -872,10 +1282,12 @@
                     <div class="cta-text">
                         <h2>Bereit, jetzt zu sparen?</h2>
                         <p>Unsere Experten helfen Ihnen, den optimalen Energietarif zu finden – persönlich, unabhängig und genau auf Ihre Bedürfnisse zugeschnitten.</p>
-                        <a href="kontakt.html" class="btn btn-dark-blue">Kostenlose Beratung vereinbaren</a>
                     </div>
                     <div class="cta-image">
                         <img src="images/Sparen.jpeg" alt="Kontaktmöglichkeiten" class="contact-cubes">
+                    </div>
+                    <div class="cta-button">
+                        <a href="kontakt.html" class="btn btn-dark-blue">Kostenlose Beratung vereinbaren</a>
                     </div>
                 </div>
             </div>

@@ -306,6 +306,9 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             color: #333;
             border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
         }
         
         .contact-image-container .contact-info-box {
@@ -313,6 +316,9 @@
             backdrop-filter: blur(2px);
             color: #333;
             border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 15px;
         }
         
         .form-message, .success-message, .error-message {
@@ -320,6 +326,7 @@
             backdrop-filter: blur(2px);
             color: #333;
             border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 8px;
         }
         
         .form-message {
@@ -506,6 +513,54 @@
         @media print {
             .view-toggle-btn {
                 display: none;
+            }
+        }
+        
+        /* Kontakt-Responsive Anpassungen für Mobile */
+        @media (max-width: 768px) {
+            .contact-wrapper {
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .form-container, 
+            .contact-image-container .contact-info-box {
+                width: 100%;
+                margin-left: 0;
+                margin-right: 0;
+                box-sizing: border-box;
+                border-radius: 12px;
+            }
+            
+            .contact-image-container img {
+                border-radius: 12px;
+                margin-bottom: 15px;
+            }
+            
+            .contact-time-list {
+                padding-left: 10px;
+            }
+            
+            .contact-time-list li {
+                margin-bottom: 10px;
+                display: flex;
+                align-items: center;
+            }
+            
+            .contact-time-list li i {
+                margin-right: 10px;
+                color: #1A2C54;
+                min-width: 20px;
+            }
+            
+            .form-row {
+                flex-direction: column;
+            }
+            
+            .form-group {
+                width: 100%;
+                margin-bottom: 15px;
             }
         }
     </style>
