@@ -1125,6 +1125,8 @@ section:nth-of-type(2) .section-header p {
     .mobile-menu-toggle {
         display: block;
         transition: all 0.3s ease;
+        cursor: pointer;
+        z-index: 1001;
     }
     
     /* Testimonials-Sektion in der mobilen Ansicht ausblenden */
@@ -1150,7 +1152,7 @@ section:nth-of-type(2) .section-header p {
         transition: all 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
         z-index: 99;
         opacity: 0;
-        pointer-events: none;
+        visibility: hidden;
         margin: 0;
     }
     
@@ -1171,7 +1173,7 @@ section:nth-of-type(2) .section-header p {
     nav ul.show {
         transform: translate(-50%, 0);
         opacity: 1;
-        pointer-events: auto;
+        visibility: visible;
     }
     
     nav ul li {
@@ -1613,54 +1615,66 @@ section:nth-of-type(2) .section-header p {
 /* Desktop-auf-Smartphone-Ansicht für Android-Geräte */
 @media screen and (max-width: 992px) {
     html.desktop-view {
-        min-width: 1200px;
-        overflow-x: auto;
-        overflow-y: auto;
+        font-size: 16px;
     }
     
     html.desktop-view body {
-        min-width: 1200px;
-        width: 1200px;
+        padding-top: 80px;
+        max-width: 992px;
         margin: 0 auto;
-        overflow-x: visible;
-        padding-top: 70px;
+        overflow-x: hidden;
+        background-attachment: fixed;
     }
     
     html.desktop-view .container {
-        width: 1200px;
-        max-width: 1200px;
+        width: 100%;
+        max-width: 960px;
+        padding: 0 20px;
     }
     
     html.desktop-view header {
-        min-width: 1200px;
-        width: 100%;
+        background-color: rgba(80, 80, 80, 0.5);
         position: fixed;
+        width: 100%;
+        max-width: 992px;
         top: 0;
-        left: auto;
     }
     
     html.desktop-view nav ul {
         position: relative;
-        display: flex;
-        flex-direction: row;
-        top: unset;
-        left: unset;
-        width: auto;
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        box-shadow: none;
         background: transparent;
         transform: none;
-        box-shadow: none;
-        padding: 0;
-        z-index: 1;
+        opacity: 1;
+        visibility: visible;
+        width: auto;
+        height: auto;
+        overflow: visible;
+        top: auto;
+        left: auto;
+        border-radius: 0;
+        margin-left: 20px;
+    }
+    
+    html.desktop-view nav ul::before,
+    html.desktop-view nav ul::after {
+        display: none;
     }
     
     html.desktop-view nav ul li {
-        margin: 0;
+        margin: 0 10px;
         width: auto;
-        text-align: left;
+        text-align: center;
+        border: none;
     }
     
     html.desktop-view .mobile-menu-toggle {
-        display: none;
+        display: none !important;
     }
     
     html.desktop-view .hero .container {

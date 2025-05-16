@@ -511,6 +511,30 @@
     </style>
 </head>
 <body>
+    <!-- GitHub Pages Debug -->
+    <script>
+        // Füge eine Klasse zum body-Element hinzu, um zu erkennen, ob wir auf GitHub Pages sind
+        if (window.location.hostname.includes('github.io')) {
+            document.body.classList.add('github-pages');
+            
+            // Füge zusätzliche Styles für GitHub Pages hinzu
+            const style = document.createElement('style');
+            style.textContent = `
+                @media (max-width: 768px) {
+                    .github-pages nav ul {
+                        display: none !important;
+                    }
+                    .github-pages nav ul.show {
+                        display: flex !important;
+                        opacity: 1 !important;
+                        visibility: visible !important;
+                        transform: translate(-50%, 0) !important;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+    </script>
     <!-- Hintergrundkreise -->
     <div class="background-circles">
         <div class="circle"></div>
@@ -780,9 +804,46 @@
     </footer>
 
     <script>
-        // Mobile Menu Toggle
-        document.querySelector('.mobile-menu-toggle').addEventListener('click', function() {
-            document.querySelector('nav ul').classList.toggle('show');
+        // Optimiertes Mobile Menu Toggle für maximale Kompatibilität
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.querySelector('.mobile-menu-toggle');
+            const navMenu = document.querySelector('nav ul');
+            
+            if (menuToggle && navMenu) {
+                // Entferne alle bestehenden Event-Listener (falls vorhanden)
+                const menuClone = menuToggle.cloneNode(true);
+                menuToggle.parentNode.replaceChild(menuClone, menuToggle);
+                
+                // Füge den neuen Event-Listener hinzu
+                menuClone.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    navMenu.classList.toggle('show');
+                    
+                    // Zusätzliche Debug-Information
+                    console.log('Menü-Status:', navMenu.classList.contains('show') ? 'geöffnet' : 'geschlossen');
+                });
+                
+                // Klick außerhalb des Menüs schließt es
+                document.addEventListener('click', function(e) {
+                    if (navMenu.classList.contains('show') && 
+                        !navMenu.contains(e.target) && 
+                        !menuClone.contains(e.target)) {
+                        navMenu.classList.remove('show');
+                    }
+                });
+                
+                // Event-Listener für Menü-Elemente - schließen das Menü beim Klick
+                const menuLinks = navMenu.querySelectorAll('a');
+                menuLinks.forEach(link => {
+                    link.addEventListener('click', function() {
+                        // Verzögert ausführen, damit der Link-Klick zuerst verarbeitet wird
+                        setTimeout(() => {
+                            navMenu.classList.remove('show');
+                        }, 100);
+                    });
+                });
+            }
         });
 
         // Testimonial Slider
